@@ -1,0 +1,1812 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pharma Distribution Management App</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg-1: #f1f5f9;
+      --bg-2: #e2e8f0;
+      --primary: #1e40af;
+      --primary-2: #1d4ed8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --surface: #ffffff;
+      --border: #dbe2ea;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      color: var(--text-main);
+      padding: 30px 15px;
+    }
+
+    .app, .login-card {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .login-card {
+      max-width: 420px;
+      overflow: visible;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .header p {
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .content, .login-content {
+      padding: 24px;
+    }
+
+    .hidden { display: none !important; }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      background: #e0ecff;
+      color: #1d4ed8;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab-btn.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .section-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: var(--primary-2);
+    }
+
+    .mini-note {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: -4px;
+      margin-bottom: 14px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    input, select {
+      flex: 1;
+      min-width: 150px;
+      padding: 12px;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      font-size: 14px;
+      background: white;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 12px 16px;
+    }
+
+    .add-btn { background: #2563eb; color: white; }
+    .add-btn:hover { background: #1e3a8a; }
+
+    .edit-btn {
+      background: #f59e0b;
+      color: white;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .delete-btn {
+      background: #ef4444;
+      color: white;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .secondary-btn {
+      background: #334155;
+      color: white;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .list { margin-top: 10px; }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      background: white;
+    }
+
+    .item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .name {
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .meta {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .total-box {
+      margin-top: 16px;
+      padding: 14px;
+      background: #eaf2ff;
+      border-left: 5px solid #2563eb;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .summary-card {
+      display: grid;
+      gap: 12px;
+    }
+
+    .summary-item {
+      padding: 16px;
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .summary-item.profit {
+      background: #ecfeff;
+      border-color: #bae6fd;
+      color: #0f766e;
+    }
+
+    .summary-item.loss {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+
+    .box {
+      margin-top: 18px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+    }
+
+    .box h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #1d4ed8;
+    }
+
+    .row-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .row-line:last-child { border-bottom: none; }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .van-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .van-card {
+      background: white;
+      border: 1px solid #dbe5f0;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .payment-mediums {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .medium-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .medium-card h4 {
+      margin: 0 0 8px;
+      color: #1d4ed8;
+    }
+
+    .login-help {
+      margin-top: 10px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .status-row {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .context-bar {
+      margin-bottom: 14px;
+      padding: 12px;
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
+      background: #f8fbff;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .context-left, .context-right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mini-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .mini-card .label {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .mini-card .value {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1e3a8a;
+    }
+
+    .banner {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .banner strong {
+      color: #9a3412;
+    }
+
+    .undo-banner {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 16px;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 560px;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      padding: 16px;
+    }
+
+    .modal h3 {
+      margin-top: 0;
+      color: #1d4ed8;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 800px) {
+      .grid-two { grid-template-columns: 1fr; }
+      .item, .row-line { flex-direction: column; align-items: flex-start; }
+      .actions { width: 100%; }
+      .context-bar { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loginScreen" class="login-card">
+    <div class="header">
+      <h1>Company Dashboard Login</h1>
+      <p>Role-based access for each department</p>
+    </div>
+    <div class="login-content">
+      <div class="form-row">
+        <input type="text" id="loginUsername" placeholder="Username" />
+      </div>
+      <div class="form-row">
+        <input type="password" id="loginPassword" placeholder="Password" />
+      </div>
+      <div class="form-row">
+        <button class="add-btn" onclick="login()">Login</button>
+      </div>
+      <div class="login-help">
+        Use your assigned company credentials.
+      </div>
+    </div>
+  </div>
+
+  <div id="appScreen" class="app hidden">
+    <div class="header">
+      <h1>Pharma Distribution Management App</h1>
+      <p>Department-wise data entry with role-based access</p>
+    </div>
+
+    <div class="content">
+      <div id="backupReminder" class="banner hidden">
+        <div><strong>Backup reminder:</strong> Export today's data backup.</div>
+        <div class="actions">
+          <button class="add-btn" onclick="exportJSON()">Export JSON</button>
+          <button class="secondary-btn" onclick="dismissBackupReminder()">Dismiss</button>
+        </div>
+      </div>
+      <div id="undoBanner" class="banner undo-banner hidden">
+        <div id="undoMessage">Item deleted.</div>
+        <div class="actions">
+          <button class="add-btn" onclick="undoLastDelete()">Undo</button>
+          <button class="secondary-btn" onclick="clearUndo()">Close</button>
+        </div>
+      </div>
+      <div class="top-bar">
+        <div>
+          Logged in as: <strong id="currentUserName">-</strong>
+          (<span id="currentUserRole">-</span>)
+          <div class="status-row">Last saved: <span id="lastSavedAt">Never</span></div>
+          <div class="status-row">Session: <span id="sessionDuration">00:00:00</span> | Today worked: <span id="todayWorkDuration">00:00:00</span> | Total work time: <span id="totalWorkDuration">00:00:00</span></div>
+        </div>
+        <div class="actions">
+          <button class="secondary-btn" onclick="exportJSON()">Export JSON</button>
+          <button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
+          <label class="secondary-btn" for="importBackupFile" style="display:inline-flex;align-items:center;">Import JSON</label>
+          <input id="importBackupFile" type="file" accept=".json,application/json" class="hidden" />
+          <button class="secondary-btn" onclick="logout()">Logout</button>
+        </div>
+      </div>
+      <div class="context-bar">
+        <div class="context-left">
+          <strong>Work Date</strong>
+          <input type="date" id="workDateInput" />
+          <span id="workDayLabel" class="pill">-</span>
+          <button class="secondary-btn" onclick="setWorkDateToToday()">Today</button>
+          <button class="secondary-btn" onclick="setWorkDateToYesterday()">Yesterday</button>
+        </div>
+        <div class="context-right">
+          <span class="pill">Live: <span id="liveClock">--:--</span></span>
+        </div>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="label">Entries on Work Date</div>
+          <div class="value" id="workDateEntryCount">0</div>
+        </div>
+        <div class="mini-card">
+          <div class="label">Sales on Work Date</div>
+          <div class="value" id="workDateSales">Rs 0</div>
+        </div>
+        <div class="mini-card">
+          <div class="label">Payments on Work Date</div>
+          <div class="value" id="workDatePayments">Rs 0</div>
+        </div>
+        <div class="mini-card">
+          <div class="label">Expenses on Work Date</div>
+          <div class="value" id="workDateExpenses">Rs 0</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="expenses" onclick="showTab('expenses')">Expenses</button>
+        <button class="tab-btn" data-tab="sales" onclick="showTab('sales')">Sales</button>
+        <button class="tab-btn" data-tab="payments" onclick="showTab('payments')">Payments</button>
+        <button class="tab-btn" data-tab="vans" onclick="showTab('vans')">Supply Vans</button>
+        <button class="tab-btn" data-tab="inventory" onclick="showTab('inventory')">Inventory</button>
+        <button class="tab-btn" data-tab="summary" onclick="showTab('summary')">Summary</button>
+        <button class="tab-btn" data-tab="users" onclick="showTab('users')">Users</button>
+      </div>
+
+      <div id="expenses" class="tab-content active">
+        <div class="section-card">
+          <h2 class="section-title">Expenses</h2>
+          <div class="form-row">
+            <input type="text" id="expenseName" placeholder="Expense name" />
+            <input type="number" id="expenseAmount" placeholder="Amount" />
+            <input type="date" id="expenseDate" />
+            <button class="add-btn" onclick="addExpense()">Add</button>
+          </div>
+          <div id="expenseList" class="list"></div>
+          <div class="total-box">Total Expenses: <span id="expenseTotal">Rs 0</span></div>
+        </div>
+      </div>
+
+      <div id="sales" class="tab-content">
+        <div class="section-card">
+          <h2 class="section-title">Sales</h2>
+          <div class="form-row">
+            <input type="number" id="saleAmount" placeholder="Sale amount" />
+            <select id="saleCompany"></select>
+            <input type="date" id="saleDate" />
+            <button class="add-btn" onclick="addSale()">Add</button>
+          </div>
+          <div class="form-row">
+            <select id="companyFilter" onchange="renderSales()"></select>
+          </div>
+          <div id="salesList" class="list"></div>
+          <div class="total-box">Total Sales: <span id="salesTotal">Rs 0</span></div>
+        </div>
+      </div>
+
+      <div id="payments" class="tab-content">
+        <div class="section-card">
+          <h2 class="section-title">Payments Received</h2>
+          <p class="mini-note">Accounts role can enter payments. Admin can review everything.</p>
+          <div class="form-row">
+            <input type="number" id="paymentAmount" placeholder="Received amount" />
+            <select id="paymentCompany"></select>
+            <select id="paymentMedium">
+              <option value="">Select medium</option>
+              <option value="UBL">UBL</option>
+              <option value="HBL">HBL</option>
+              <option value="Konnect">Konnect</option>
+              <option value="Cash in hand">Cash in hand</option>
+            </select>
+            <input type="date" id="paymentDate" />
+            <input type="text" id="paymentNote" placeholder="Note (optional)" />
+            <button class="add-btn" onclick="addPayment()">Add Payment</button>
+          </div>
+          <div id="paymentList" class="list"></div>
+          <div class="total-box">Total Cash Received: <span id="paymentTotal">Rs 0</span></div>
+
+          <div class="payment-mediums">
+            <div class="medium-card"><h4>UBL</h4><div id="mediumUBL">Rs 0</div></div>
+            <div class="medium-card"><h4>HBL</h4><div id="mediumHBL">Rs 0</div></div>
+            <div class="medium-card"><h4>Konnect</h4><div id="mediumKonnect">Rs 0</div></div>
+            <div class="medium-card"><h4>Cash in hand</h4><div id="mediumCash">Rs 0</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="vans" class="tab-content">
+        <div class="section-card">
+          <h2 class="section-title">Supply Vans</h2>
+          <div class="form-row">
+            <input type="text" id="vanNumber" placeholder="Van / car allotted number" />
+            <button class="add-btn" onclick="addVan()">Add Van</button>
+          </div>
+
+          <div class="form-row">
+            <select id="tripVanSelect">
+              <option value="">Select van</option>
+            </select>
+            <input type="date" id="tripDate" />
+            <input type="time" id="tripExitTime" />
+            <input type="text" id="tripDriver" placeholder="Driver name" />
+            <input type="text" id="tripSupplyman" placeholder="Supplyman name" />
+            <select id="tripTourType">
+              <option value="">Tour type</option>
+              <option value="City">City</option>
+              <option value="Intercity">Intercity</option>
+              <option value="Emergency">Emergency</option>
+            </select>
+            <input type="text" id="tripRoute" placeholder="Route / Area" />
+            <button class="add-btn" onclick="addVanTrip()">Add Trip</button>
+          </div>
+
+          <div class="total-box">Total Vans Added: <span id="vanCount">0</span></div>
+          <div id="vanCards" class="van-grid"></div>
+        </div>
+      </div>
+
+      <div id="inventory" class="tab-content">
+        <div class="section-card">
+          <h2 class="section-title">Inventory</h2>
+          <div class="form-row">
+            <input type="text" id="stockName" placeholder="Product name" />
+            <select id="stockCompany"></select>
+            <input type="number" id="stockQty" placeholder="Quantity" />
+            <button class="add-btn" onclick="addStock()">Add Stock</button>
+          </div>
+          <div id="stockList" class="list"></div>
+          <div class="total-box">Total Products: <span id="stockCount">0</span></div>
+        </div>
+      </div>
+
+      <div id="summary" class="tab-content">
+        <div class="section-card">
+          <h2 class="section-title">Summary</h2>
+
+          <div class="summary-card">
+            <div class="summary-item">Total Expenses: <span id="summaryExpenses">Rs 0</span></div>
+            <div class="summary-item">Total Sales: <span id="summarySales">Rs 0</span></div>
+            <div class="summary-item">Total Cash Received: <span id="summaryReceived">Rs 0</span></div>
+            <div class="summary-item">Outstanding Balance: <span id="summaryOutstanding">Rs 0</span></div>
+            <div class="summary-item" id="profitCard">Net Profit: <span id="summaryProfit">Rs 0</span></div>
+            <div class="summary-item">Total Supply Vans: <span id="summaryVans">0</span></div>
+          </div>
+
+          <div class="grid-two">
+            <div class="box">
+              <h3>Company-wise Outstanding</h3>
+              <div id="companyOutstanding"></div>
+            </div>
+            <div class="box">
+              <h3>Payment Medium Totals</h3>
+              <div id="paymentMediumTotals"></div>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Today Work Leaderboard</h3>
+            <div id="todayWorkLeaderboard"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="users" class="tab-content">
+        <div class="section-card">
+          <h2 class="section-title">Users</h2>
+          <p class="mini-note">Admin can add users and change their roles later. Passwords are stored as hashes.</p>
+
+          <div class="form-row">
+            <input type="text" id="userName" placeholder="Full name" />
+            <input type="text" id="userUsername" placeholder="Username" />
+            <input type="password" id="userPassword" placeholder="Password" />
+            <select id="userRole">
+              <option value="">Select role</option>
+              <option value="Admin">Admin</option>
+              <option value="Accounts">Accounts</option>
+              <option value="Sales">Sales</option>
+              <option value="Logistics">Logistics</option>
+              <option value="Store">Store</option>
+            </select>
+            <button class="add-btn" onclick="addUser()">Add User</button>
+          </div>
+
+          <div id="userList" class="list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="editModalOverlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h3 id="editModalTitle">Edit</h3>
+      <div id="editModalFields"></div>
+      <div class="modal-actions">
+        <button class="secondary-btn" onclick="closeEditModal()">Cancel</button>
+        <button class="add-btn" onclick="saveEditModal()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="passwordModalOverlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>Password Update Required</h3>
+      <p class="mini-note" style="margin-top:0;">Set a new password to continue.</p>
+      <div class="form-row"><input type="password" id="newPasswordInput" placeholder="New password (min 6 chars)" /></div>
+      <div class="form-row"><input type="password" id="confirmPasswordInput" placeholder="Confirm new password" /></div>
+      <div class="modal-actions">
+        <button class="add-btn" onclick="submitForcedPasswordChange()">Update Password</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "pharma_distribution_app_users_v1";
+    const MAX_AMOUNT = 1000000000;
+    const MAX_QTY = 1000000;
+    const IDLE_TIMEOUT_MS = 15 * 60 * 1000;
+    const UNDO_TIMEOUT_MS = 30000;
+    const COMPANY_NAMES = [
+      "Sami Pharmaceuticals",
+      "Abbott Laboratories",
+      "Reckitt Benkiser",
+      "Scilife Pharma",
+      "Global Laboratories",
+      "IRS"
+    ];
+    const ROLE_TABS = {
+      Admin: ["expenses", "sales", "payments", "vans", "inventory", "summary", "users"],
+      Accounts: ["expenses", "payments"],
+      Sales: ["sales"],
+      Logistics: ["vans"],
+      Store: ["inventory"]
+    };
+    const PAYMENT_MEDIA = ["UBL", "HBL", "Konnect", "Cash in hand"];
+
+    let data = loadData();
+    let editState = null;
+    let idleTimer = null;
+    let sessionStartedAt = null;
+    let sessionTimer = null;
+    let forcedPasswordUserId = null;
+    let lastDeletedAction = null;
+    let backupReminderDismissedAt = "";
+
+    function formatPKR(amount) {
+      return "Rs " + Number(amount || 0).toLocaleString("en-PK");
+    }
+
+    function todayDate() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    }
+
+    function nowReadable() {
+      return new Date().toLocaleString("en-PK", { dateStyle: "medium", timeStyle: "short" });
+    }
+
+    function formatDuration(totalMs) {
+      const safeMs = Math.max(0, Number(totalMs) || 0);
+      const totalSeconds = Math.floor(safeMs / 1000);
+      const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+      const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+      const seconds = String(totalSeconds % 60).padStart(2, "0");
+      return `${hours}:${minutes}:${seconds}`;
+    }
+
+    function getDefaultData() {
+      return {
+        expenses: [],
+        sales: [],
+        payments: [],
+        vans: [],
+        stock: [],
+        users: [
+          {
+            id: 1,
+            name: "Administrator",
+            username: "admin",
+            passwordHash: "",
+            role: "Admin",
+            mustChangePassword: true,
+            totalActiveMs: 0,
+            dailyActiveMs: {}
+          }
+        ],
+        currentUser: null,
+        meta: {
+          lastSavedAt: "",
+          lastBackupDate: "",
+          workDate: todayDate()
+        }
+      };
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return getDefaultData();
+      try {
+        const parsed = JSON.parse(raw);
+        const defaults = getDefaultData();
+        return {
+          expenses: Array.isArray(parsed.expenses) ? parsed.expenses : [],
+          sales: Array.isArray(parsed.sales) ? parsed.sales : [],
+          payments: Array.isArray(parsed.payments) ? parsed.payments : [],
+          vans: Array.isArray(parsed.vans) ? parsed.vans : [],
+          stock: Array.isArray(parsed.stock) ? parsed.stock : [],
+          users: Array.isArray(parsed.users) && parsed.users.length ? parsed.users : defaults.users,
+          currentUser: parsed.currentUser || null,
+          meta: {
+            lastSavedAt: parsed?.meta?.lastSavedAt || "",
+            lastBackupDate: parsed?.meta?.lastBackupDate || "",
+            workDate: parsed?.meta?.workDate || todayDate()
+          }
+        };
+      } catch {
+        return getDefaultData();
+      }
+    }
+
+    async function sha256(input) {
+      const encoded = new TextEncoder().encode(input);
+      const hash = await crypto.subtle.digest("SHA-256", encoded);
+      return Array.from(new Uint8Array(hash)).map(v => v.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function migrateLegacyUsers() {
+      let changed = false;
+      for (const user of data.users) {
+        if (!user.passwordHash && user.password) {
+          user.passwordHash = await sha256(String(user.password));
+          delete user.password;
+          if (typeof user.mustChangePassword !== "boolean") user.mustChangePassword = user.username === "admin";
+          changed = true;
+        }
+        if (!user.passwordHash && user.username === "admin") {
+          user.passwordHash = await sha256("admin123");
+          user.mustChangePassword = true;
+          changed = true;
+        }
+        if (typeof user.mustChangePassword !== "boolean") {
+          user.mustChangePassword = false;
+          changed = true;
+        }
+        if (!Number.isFinite(user.totalActiveMs) || user.totalActiveMs < 0) {
+          user.totalActiveMs = 0;
+          changed = true;
+        }
+        if (!user.dailyActiveMs || typeof user.dailyActiveMs !== "object" || Array.isArray(user.dailyActiveMs)) {
+          user.dailyActiveMs = {};
+          changed = true;
+        }
+      }
+      if (changed) saveData();
+    }
+
+    function saveData() {
+      data.meta = data.meta || {};
+      data.meta.lastSavedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      updateLastSavedUI();
+      updateBackupReminder();
+    }
+
+    function updateLastSavedUI() {
+      const text = data?.meta?.lastSavedAt ? new Date(data.meta.lastSavedAt).toLocaleString("en-PK", { dateStyle: "medium", timeStyle: "short" }) : "Never";
+      document.getElementById("lastSavedAt").textContent = text;
+    }
+
+    function getWeekdayName(dateString) {
+      const date = new Date(dateString + "T00:00:00");
+      if (Number.isNaN(date.getTime())) return "-";
+      return date.toLocaleDateString("en-PK", { weekday: "long" });
+    }
+
+    function updateWorkDateUI() {
+      const workDate = data?.meta?.workDate || todayDate();
+      const input = document.getElementById("workDateInput");
+      if (input.value !== workDate) input.value = workDate;
+      document.getElementById("workDayLabel").textContent = getWeekdayName(workDate);
+      updateWorkDateStats();
+    }
+
+    function syncFormDatesFromWorkDate() {
+      const workDate = data?.meta?.workDate || todayDate();
+      ["expenseDate", "saleDate", "paymentDate", "tripDate"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = workDate;
+      });
+    }
+
+    function setWorkDate(value) {
+      data.meta.workDate = value || todayDate();
+      saveData();
+      syncFormDatesFromWorkDate();
+      updateWorkDateUI();
+    }
+
+    function setWorkDateToToday() {
+      setWorkDate(todayDate());
+    }
+
+    function setWorkDateToYesterday() {
+      const d = new Date();
+      d.setDate(d.getDate() - 1);
+      const y = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      setWorkDate(y);
+    }
+
+    function updateLiveClock() {
+      document.getElementById("liveClock").textContent = new Date().toLocaleTimeString("en-PK", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    }
+
+    function updateWorkDateStats() {
+      const workDate = data?.meta?.workDate || todayDate();
+      const expenses = data.expenses.filter(item => item.date === workDate);
+      const sales = data.sales.filter(item => item.date === workDate);
+      const payments = data.payments.filter(item => item.date === workDate);
+      const totalEntries = expenses.length + sales.length + payments.length;
+      const totalExpenseAmount = expenses.reduce((sum, item) => sum + item.amount, 0);
+      const totalSalesAmount = sales.reduce((sum, item) => sum + item.amount, 0);
+      const totalPaymentAmount = payments.reduce((sum, item) => sum + item.amount, 0);
+      document.getElementById("workDateEntryCount").textContent = String(totalEntries);
+      document.getElementById("workDateExpenses").textContent = formatPKR(totalExpenseAmount);
+      document.getElementById("workDateSales").textContent = formatPKR(totalSalesAmount);
+      document.getElementById("workDatePayments").textContent = formatPKR(totalPaymentAmount);
+    }
+
+    function fillCompanySelect(selectId, includeAllOption = false) {
+      const select = document.getElementById(selectId);
+      select.innerHTML = "";
+      const first = document.createElement("option");
+      first.value = "";
+      first.textContent = includeAllOption ? "All companies" : "Select company";
+      select.appendChild(first);
+      COMPANY_NAMES.forEach(company => {
+        const option = document.createElement("option");
+        option.value = company;
+        option.textContent = company;
+        select.appendChild(option);
+      });
+    }
+
+    function getCurrentUser() {
+      return data.users.find(user => user.id === data.currentUser) || null;
+    }
+
+    function requireText(value, label) {
+      const clean = String(value || "").trim();
+      if (!clean) throw new Error(`${label} is required.`);
+      return clean;
+    }
+
+    function parseAmount(value, label = "Amount") {
+      const num = Number(value);
+      if (!Number.isFinite(num) || num <= 0 || num > MAX_AMOUNT) {
+        throw new Error(`${label} must be between 0 and ${MAX_AMOUNT.toLocaleString("en-PK")}.`);
+      }
+      return num;
+    }
+
+    function parseQty(value) {
+      const num = Number(value);
+      if (!Number.isInteger(num) || num <= 0 || num > MAX_QTY) {
+        throw new Error(`Quantity must be an integer between 1 and ${MAX_QTY.toLocaleString("en-PK")}.`);
+      }
+      return num;
+    }
+
+    function existsDuplicate(list, matcher, ignoreIndex = -1) {
+      return list.some((item, idx) => idx !== ignoreIndex && matcher(item));
+    }
+
+    function resetIdleTimer() {
+      if (!getCurrentUser()) return;
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        alert("Session expired due to inactivity.");
+        logout();
+      }, IDLE_TIMEOUT_MS);
+    }
+
+    function startSessionTimer() {
+      if (sessionTimer) clearInterval(sessionTimer);
+      sessionTimer = setInterval(updateSessionDurationUI, 1000);
+      updateSessionDurationUI();
+    }
+
+    function stopSessionTimer() {
+      if (sessionTimer) clearInterval(sessionTimer);
+      sessionTimer = null;
+    }
+
+    function getCurrentSessionMs() {
+      if (!sessionStartedAt) return 0;
+      return Date.now() - sessionStartedAt;
+    }
+
+    function updateSessionDurationUI() {
+      const currentUser = getCurrentUser();
+      if (!currentUser) {
+        document.getElementById("sessionDuration").textContent = "00:00:00";
+        document.getElementById("todayWorkDuration").textContent = "00:00:00";
+        document.getElementById("totalWorkDuration").textContent = "00:00:00";
+        return;
+      }
+      const sessionMs = getCurrentSessionMs();
+      const totalMs = (currentUser.totalActiveMs || 0) + sessionMs;
+      const todayMs = (currentUser.dailyActiveMs?.[todayDate()] || 0) + sessionMs;
+      document.getElementById("sessionDuration").textContent = formatDuration(sessionMs);
+      document.getElementById("todayWorkDuration").textContent = formatDuration(todayMs);
+      document.getElementById("totalWorkDuration").textContent = formatDuration(totalMs);
+    }
+
+    function finalizeSessionTime() {
+      const currentUser = getCurrentUser();
+      if (!currentUser || !sessionStartedAt) return;
+      const elapsed = getCurrentSessionMs();
+      currentUser.totalActiveMs = (currentUser.totalActiveMs || 0) + elapsed;
+      currentUser.dailyActiveMs = currentUser.dailyActiveMs || {};
+      const dateKey = todayDate();
+      currentUser.dailyActiveMs[dateKey] = (currentUser.dailyActiveMs[dateKey] || 0) + elapsed;
+      sessionStartedAt = null;
+      stopSessionTimer();
+    }
+
+    function registerActivityEvents() {
+      ["click", "keydown", "touchstart", "mousemove"].forEach(eventName => {
+        document.addEventListener(eventName, () => {
+          if (getCurrentUser()) resetIdleTimer();
+        }, { passive: true });
+      });
+    }
+
+    async function login() {
+      try {
+        const username = requireText(document.getElementById("loginUsername").value, "Username");
+        const password = requireText(document.getElementById("loginPassword").value, "Password");
+        const attemptedHash = await sha256(password);
+        const user = data.users.find(item => item.username.toLowerCase() === username.toLowerCase() && item.passwordHash === attemptedHash);
+        if (!user) {
+          alert("Invalid username or password.");
+          return;
+        }
+        data.currentUser = user.id;
+        saveData();
+        updateAuthUI();
+        resetIdleTimer();
+        if (user.mustChangePassword) {
+          forcedPasswordUserId = user.id;
+          openForcedPasswordModal();
+        }
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function logout() {
+      finalizeSessionTime();
+      data.currentUser = null;
+      forcedPasswordUserId = null;
+      if (idleTimer) clearTimeout(idleTimer);
+      saveData();
+      updateAuthUI();
+    }
+
+    function openForcedPasswordModal() {
+      document.getElementById("newPasswordInput").value = "";
+      document.getElementById("confirmPasswordInput").value = "";
+      document.getElementById("passwordModalOverlay").classList.remove("hidden");
+    }
+
+    async function submitForcedPasswordChange() {
+      const user = data.users.find(item => item.id === forcedPasswordUserId);
+      if (!user) return;
+      const newPassword = document.getElementById("newPasswordInput").value;
+      const confirmPassword = document.getElementById("confirmPasswordInput").value;
+      if (!newPassword || newPassword.length < 6) {
+        alert("New password must be at least 6 characters.");
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+      user.passwordHash = await sha256(newPassword);
+      user.mustChangePassword = false;
+      forcedPasswordUserId = null;
+      saveData();
+      document.getElementById("passwordModalOverlay").classList.add("hidden");
+      alert("Password updated successfully.");
+    }
+
+    function updateAuthUI() {
+      const currentUser = getCurrentUser();
+      const loginScreen = document.getElementById("loginScreen");
+      const appScreen = document.getElementById("appScreen");
+      if (!currentUser) {
+        sessionStartedAt = null;
+        stopSessionTimer();
+        loginScreen.classList.remove("hidden");
+        appScreen.classList.add("hidden");
+        updateSessionDurationUI();
+        return;
+      }
+      loginScreen.classList.add("hidden");
+      appScreen.classList.remove("hidden");
+      document.getElementById("currentUserName").textContent = currentUser.name;
+      document.getElementById("currentUserRole").textContent = currentUser.role;
+      if (!sessionStartedAt) sessionStartedAt = Date.now();
+      startSessionTimer();
+      applyRolePermissions(currentUser.role);
+      renderAll();
+      updateLastSavedUI();
+      updateWorkDateUI();
+      updateBackupReminder();
+    }
+
+    function applyRolePermissions(role) {
+      const allowedTabs = ROLE_TABS[role] || [];
+      document.querySelectorAll(".tab-btn").forEach(button => {
+        const tab = button.getAttribute("data-tab");
+        button.classList.toggle("hidden", !allowedTabs.includes(tab));
+      });
+      document.querySelectorAll(".tab-content").forEach(panel => panel.classList.remove("active"));
+      if (allowedTabs[0]) showTab(allowedTabs[0]);
+    }
+
+    function showTab(tabId) {
+      const currentUser = getCurrentUser();
+      if (!currentUser) return;
+      const allowedTabs = ROLE_TABS[currentUser.role] || [];
+      if (!allowedTabs.includes(tabId)) return;
+      document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(button => button.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+      const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+      if (btn) btn.classList.add("active");
+    }
+
+    async function addUser() {
+      const currentUser = getCurrentUser();
+      if (!currentUser || currentUser.role !== "Admin") return;
+      try {
+        const name = requireText(document.getElementById("userName").value, "Name");
+        const username = requireText(document.getElementById("userUsername").value, "Username");
+        const password = requireText(document.getElementById("userPassword").value, "Password");
+        const role = requireText(document.getElementById("userRole").value, "Role");
+        if (password.length < 6) throw new Error("Password must be at least 6 characters.");
+        if (existsDuplicate(data.users, item => item.username.toLowerCase() === username.toLowerCase())) throw new Error("Username already exists.");
+        data.users.push({
+          id: Date.now(),
+          name,
+          username,
+          passwordHash: await sha256(password),
+          role,
+          mustChangePassword: false,
+          totalActiveMs: 0,
+          dailyActiveMs: {}
+        });
+        saveData();
+        document.getElementById("userName").value = "";
+        document.getElementById("userUsername").value = "";
+        document.getElementById("userPassword").value = "";
+        document.getElementById("userRole").value = "";
+        renderUsers();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function addExpense() {
+      try {
+        const name = requireText(document.getElementById("expenseName").value, "Expense name");
+        const amount = parseAmount(document.getElementById("expenseAmount").value, "Expense amount");
+        const date = requireText(document.getElementById("expenseDate").value, "Date");
+        if (existsDuplicate(data.expenses, item => item.name.toLowerCase() === name.toLowerCase() && item.amount === amount && item.date === date) && !confirm("Possible duplicate expense. Save anyway?")) return;
+        data.expenses.push({ name, amount, date });
+        saveData();
+        document.getElementById("expenseName").value = "";
+        document.getElementById("expenseAmount").value = "";
+        document.getElementById("expenseDate").value = todayDate();
+        renderExpenses();
+        renderSummary();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function addSale() {
+      try {
+        const amount = parseAmount(document.getElementById("saleAmount").value, "Sale amount");
+        const company = requireText(document.getElementById("saleCompany").value, "Company");
+        const date = requireText(document.getElementById("saleDate").value, "Date");
+        if (existsDuplicate(data.sales, item => item.company === company && item.amount === amount && item.date === date) && !confirm("Possible duplicate sale. Save anyway?")) return;
+        data.sales.push({ company, amount, date });
+        saveData();
+        document.getElementById("saleAmount").value = "";
+        document.getElementById("saleCompany").value = "";
+        document.getElementById("saleDate").value = todayDate();
+        renderSales();
+        renderSummary();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function addPayment() {
+      try {
+        const amount = parseAmount(document.getElementById("paymentAmount").value, "Payment amount");
+        const company = requireText(document.getElementById("paymentCompany").value, "Company");
+        const medium = requireText(document.getElementById("paymentMedium").value, "Payment medium");
+        const date = requireText(document.getElementById("paymentDate").value, "Date");
+        const note = document.getElementById("paymentNote").value.trim();
+        if (existsDuplicate(data.payments, item => item.company === company && item.amount === amount && item.date === date && item.medium === medium) && !confirm("Possible duplicate payment. Save anyway?")) return;
+        data.payments.push({ id: Date.now(), company, medium, amount, date, note });
+        saveData();
+        document.getElementById("paymentAmount").value = "";
+        document.getElementById("paymentCompany").value = "";
+        document.getElementById("paymentMedium").value = "";
+        document.getElementById("paymentDate").value = todayDate();
+        document.getElementById("paymentNote").value = "";
+        renderPayments();
+        renderSummary();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function addVan() {
+      try {
+        const number = requireText(document.getElementById("vanNumber").value, "Van number");
+        if (existsDuplicate(data.vans, item => item.number.toLowerCase() === number.toLowerCase())) throw new Error("This van number already exists.");
+        data.vans.push({ id: Date.now(), number, trips: [] });
+        saveData();
+        document.getElementById("vanNumber").value = "";
+        renderVans();
+        renderSummary();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function addVanTrip() {
+      try {
+        const vanId = Number(document.getElementById("tripVanSelect").value);
+        const date = requireText(document.getElementById("tripDate").value, "Date");
+        const exitTime = requireText(document.getElementById("tripExitTime").value, "Exit time");
+        const driver = requireText(document.getElementById("tripDriver").value, "Driver");
+        const supplyman = requireText(document.getElementById("tripSupplyman").value, "Supplyman");
+        const tourType = requireText(document.getElementById("tripTourType").value, "Tour type");
+        const route = requireText(document.getElementById("tripRoute").value, "Route / Area");
+        const van = data.vans.find(item => item.id === vanId);
+        if (!van) throw new Error("Select a valid van.");
+        if (existsDuplicate(van.trips, item => item.date === date && item.exitTime === exitTime && item.driver.toLowerCase() === driver.toLowerCase()) && !confirm("Possible duplicate trip. Save anyway?")) return;
+        van.trips.push({ id: Date.now(), date, exitTime, driver, supplyman, tourType, route });
+        saveData();
+        document.getElementById("tripVanSelect").value = "";
+        document.getElementById("tripDate").value = todayDate();
+        document.getElementById("tripExitTime").value = "";
+        document.getElementById("tripDriver").value = "";
+        document.getElementById("tripSupplyman").value = "";
+        document.getElementById("tripTourType").value = "";
+        document.getElementById("tripRoute").value = "";
+        renderVans();
+        renderSummary();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function addStock() {
+      try {
+        const name = requireText(document.getElementById("stockName").value, "Product name");
+        const company = requireText(document.getElementById("stockCompany").value, "Company");
+        const qty = parseQty(document.getElementById("stockQty").value);
+        if (existsDuplicate(data.stock, item => item.name.toLowerCase() === name.toLowerCase() && item.company === company) && !confirm("Product already exists for this company. Add anyway?")) return;
+        data.stock.push({ id: Date.now(), name, company, qty });
+        saveData();
+        document.getElementById("stockName").value = "";
+        document.getElementById("stockCompany").value = "";
+        document.getElementById("stockQty").value = "";
+        renderStock();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function openEditModal(kind, payload) {
+      editState = { kind, ...payload };
+      const fields = document.getElementById("editModalFields");
+      let html = "";
+      if (kind === "expense") {
+        document.getElementById("editModalTitle").textContent = "Edit Expense";
+        const item = data.expenses[payload.index];
+        html = `<div class="form-row"><input id="modalName" value="${item.name}" /></div><div class="form-row"><input id="modalAmount" type="number" value="${item.amount}" /></div><div class="form-row"><input id="modalDate" type="date" value="${item.date}" /></div>`;
+      } else if (kind === "sale") {
+        document.getElementById("editModalTitle").textContent = "Edit Sale";
+        const item = data.sales[payload.index];
+        html = `<div class="form-row"><select id="modalCompany"></select></div><div class="form-row"><input id="modalAmount" type="number" value="${item.amount}" /></div><div class="form-row"><input id="modalDate" type="date" value="${item.date}" /></div>`;
+      } else if (kind === "payment") {
+        document.getElementById("editModalTitle").textContent = "Edit Payment";
+        const item = data.payments[payload.index];
+        html = `<div class="form-row"><select id="modalCompany"></select><select id="modalMedium"></select></div><div class="form-row"><input id="modalAmount" type="number" value="${item.amount}" /><input id="modalDate" type="date" value="${item.date}" /></div><div class="form-row"><input id="modalNote" value="${item.note || ""}" placeholder="Note" /></div>`;
+      } else if (kind === "van") {
+        document.getElementById("editModalTitle").textContent = "Edit Van";
+        const item = data.vans[payload.index];
+        html = `<div class="form-row"><input id="modalNumber" value="${item.number}" /></div>`;
+      } else if (kind === "trip") {
+        document.getElementById("editModalTitle").textContent = "Edit Van Trip";
+        const van = data.vans.find(v => v.id === payload.vanId);
+        const trip = van.trips.find(t => t.id === payload.tripId);
+        html = `<div class="form-row"><input id="modalDate" type="date" value="${trip.date}" /><input id="modalExitTime" type="time" value="${trip.exitTime}" /></div><div class="form-row"><input id="modalDriver" value="${trip.driver}" /><input id="modalSupplyman" value="${trip.supplyman}" /></div><div class="form-row"><select id="modalTourType"><option value="">Tour type</option><option value="City">City</option><option value="Intercity">Intercity</option><option value="Emergency">Emergency</option></select><input id="modalRoute" value="${trip.route || ""}" placeholder="Route / Area" /></div>`;
+      } else if (kind === "stock") {
+        document.getElementById("editModalTitle").textContent = "Edit Stock";
+        const item = data.stock[payload.index];
+        html = `<div class="form-row"><input id="modalName" value="${item.name}" /><select id="modalCompany"></select><input id="modalQty" type="number" value="${item.qty}" /></div>`;
+      } else if (kind === "user") {
+        document.getElementById("editModalTitle").textContent = "Edit User";
+        const item = data.users[payload.index];
+        html = `<div class="form-row"><input id="modalName" value="${item.name}" /><input id="modalUsername" value="${item.username}" /></div><div class="form-row"><select id="modalRole"><option value="Admin">Admin</option><option value="Accounts">Accounts</option><option value="Sales">Sales</option><option value="Logistics">Logistics</option><option value="Store">Store</option></select></div><div class="form-row"><input id="modalPassword" type="password" placeholder="Leave blank to keep password" /></div>`;
+      }
+      fields.innerHTML = html;
+      if (document.getElementById("modalCompany")) {
+        fillCompanySelect("modalCompany");
+        if (kind === "sale") document.getElementById("modalCompany").value = data.sales[payload.index].company;
+        if (kind === "payment") document.getElementById("modalCompany").value = data.payments[payload.index].company;
+        if (kind === "stock") document.getElementById("modalCompany").value = data.stock[payload.index].company;
+      }
+      if (document.getElementById("modalMedium")) {
+        const select = document.getElementById("modalMedium");
+        select.innerHTML = '<option value="">Select medium</option>' + PAYMENT_MEDIA.map(m => `<option value="${m}">${m}</option>`).join("");
+        select.value = data.payments[payload.index].medium;
+      }
+      if (document.getElementById("modalRole")) document.getElementById("modalRole").value = data.users[payload.index].role;
+      if (kind === "trip" && document.getElementById("modalTourType")) {
+        const van = data.vans.find(v => v.id === payload.vanId);
+        const trip = van?.trips.find(t => t.id === payload.tripId);
+        document.getElementById("modalTourType").value = trip?.tourType || "";
+      }
+      document.getElementById("editModalOverlay").classList.remove("hidden");
+    }
+
+    function closeEditModal() {
+      editState = null;
+      document.getElementById("editModalOverlay").classList.add("hidden");
+    }
+
+    async function saveEditModal() {
+      if (!editState) return;
+      try {
+        if (editState.kind === "expense") {
+          const index = editState.index;
+          const name = requireText(document.getElementById("modalName").value, "Expense name");
+          const amount = parseAmount(document.getElementById("modalAmount").value, "Expense amount");
+          const date = requireText(document.getElementById("modalDate").value, "Date");
+          data.expenses[index] = { name, amount, date };
+          renderExpenses();
+          renderSummary();
+        } else if (editState.kind === "sale") {
+          const index = editState.index;
+          const company = requireText(document.getElementById("modalCompany").value, "Company");
+          const amount = parseAmount(document.getElementById("modalAmount").value, "Sale amount");
+          const date = requireText(document.getElementById("modalDate").value, "Date");
+          data.sales[index] = { company, amount, date };
+          renderSales();
+          renderSummary();
+        } else if (editState.kind === "payment") {
+          const index = editState.index;
+          const company = requireText(document.getElementById("modalCompany").value, "Company");
+          const medium = requireText(document.getElementById("modalMedium").value, "Payment medium");
+          const amount = parseAmount(document.getElementById("modalAmount").value, "Payment amount");
+          const date = requireText(document.getElementById("modalDate").value, "Date");
+          const note = document.getElementById("modalNote").value.trim();
+          data.payments[index] = { ...data.payments[index], company, medium, amount, date, note };
+          renderPayments();
+          renderSummary();
+        } else if (editState.kind === "van") {
+          const index = editState.index;
+          const number = requireText(document.getElementById("modalNumber").value, "Van number");
+          data.vans[index].number = number;
+          renderVans();
+          renderSummary();
+        } else if (editState.kind === "trip") {
+          const van = data.vans.find(v => v.id === editState.vanId);
+          const trip = van?.trips.find(t => t.id === editState.tripId);
+          if (!trip) throw new Error("Trip not found.");
+          trip.date = requireText(document.getElementById("modalDate").value, "Date");
+          trip.exitTime = requireText(document.getElementById("modalExitTime").value, "Exit time");
+          trip.driver = requireText(document.getElementById("modalDriver").value, "Driver");
+          trip.supplyman = requireText(document.getElementById("modalSupplyman").value, "Supplyman");
+          trip.tourType = requireText(document.getElementById("modalTourType").value, "Tour type");
+          trip.route = requireText(document.getElementById("modalRoute").value, "Route / Area");
+          renderVans();
+          renderSummary();
+        } else if (editState.kind === "stock") {
+          const index = editState.index;
+          const name = requireText(document.getElementById("modalName").value, "Product name");
+          const company = requireText(document.getElementById("modalCompany").value, "Company");
+          const qty = parseQty(document.getElementById("modalQty").value);
+          data.stock[index] = { ...data.stock[index], name, company, qty };
+          renderStock();
+        } else if (editState.kind === "user") {
+          const currentUser = getCurrentUser();
+          if (!currentUser || currentUser.role !== "Admin") throw new Error("Only admin can edit users.");
+          const index = editState.index;
+          const user = data.users[index];
+          const name = requireText(document.getElementById("modalName").value, "Name");
+          const username = requireText(document.getElementById("modalUsername").value, "Username");
+          const role = requireText(document.getElementById("modalRole").value, "Role");
+          const password = document.getElementById("modalPassword").value;
+          if (existsDuplicate(data.users, item => item.username.toLowerCase() === username.toLowerCase(), index)) throw new Error("Username already exists.");
+          data.users[index] = { ...user, name, username, role };
+          if (password) {
+            if (password.length < 6) throw new Error("Password must be at least 6 characters.");
+            data.users[index].passwordHash = await sha256(password);
+            data.users[index].mustChangePassword = false;
+          }
+          renderUsers();
+          updateAuthUI();
+        }
+        saveData();
+        closeEditModal();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function pushUndo(message, restoreFn) {
+      if (lastDeletedAction?.timeoutId) clearTimeout(lastDeletedAction.timeoutId);
+      document.getElementById("undoMessage").textContent = message;
+      document.getElementById("undoBanner").classList.remove("hidden");
+      const timeoutId = setTimeout(clearUndo, UNDO_TIMEOUT_MS);
+      lastDeletedAction = { restoreFn, timeoutId };
+    }
+
+    function clearUndo() {
+      if (lastDeletedAction?.timeoutId) clearTimeout(lastDeletedAction.timeoutId);
+      lastDeletedAction = null;
+      document.getElementById("undoBanner").classList.add("hidden");
+    }
+
+    function undoLastDelete() {
+      if (!lastDeletedAction) return;
+      const restore = lastDeletedAction.restoreFn;
+      clearUndo();
+      restore();
+      saveData();
+      renderAll();
+    }
+
+    function deleteWithUndo({ label, list, index, rerender }) {
+      if (!confirm(`Delete this ${label}?`)) return;
+      const removed = list[index];
+      if (!removed) return;
+      list.splice(index, 1);
+      saveData();
+      rerender();
+      pushUndo(`${label} deleted at ${nowReadable()}.`, () => list.splice(index, 0, removed));
+    }
+
+    function editExpense(index) { openEditModal("expense", { index }); }
+    function editSale(index) { openEditModal("sale", { index }); }
+    function editPayment(index) { openEditModal("payment", { index }); }
+    function editVan(index) { openEditModal("van", { index }); }
+    function editVanTrip(vanId, tripId) { openEditModal("trip", { vanId, tripId }); }
+    function editStock(index) { openEditModal("stock", { index }); }
+    function editUser(index) { openEditModal("user", { index }); }
+
+    function deleteExpense(index) { deleteWithUndo({ label: "Expense", list: data.expenses, index, rerender: () => { renderExpenses(); renderSummary(); } }); }
+    function deleteSale(index) { deleteWithUndo({ label: "Sale", list: data.sales, index, rerender: () => { renderSales(); renderSummary(); } }); }
+    function deletePayment(index) { deleteWithUndo({ label: "Payment", list: data.payments, index, rerender: () => { renderPayments(); renderSummary(); } }); }
+    function deleteVan(index) { deleteWithUndo({ label: "Van", list: data.vans, index, rerender: () => { renderVans(); renderSummary(); } }); }
+    function deleteStock(index) { deleteWithUndo({ label: "Stock item", list: data.stock, index, rerender: () => renderStock() }); }
+
+    function deleteUser(index) {
+      const currentUser = getCurrentUser();
+      if (!currentUser || currentUser.role !== "Admin") return;
+      const user = data.users[index];
+      if (!user) return;
+      if (user.username === "admin") {
+        alert("Default admin cannot be deleted.");
+        return;
+      }
+      if (!confirm(`Delete user "${user.username}"?`)) return;
+      data.users.splice(index, 1);
+      saveData();
+      renderUsers();
+    }
+
+    function deleteVanTrip(vanId, tripId) {
+      const van = data.vans.find(v => v.id === vanId);
+      if (!van) return;
+      const index = van.trips.findIndex(t => t.id === tripId);
+      if (index < 0) return;
+      if (!confirm("Delete this van trip?")) return;
+      const removed = van.trips[index];
+      van.trips.splice(index, 1);
+      saveData();
+      renderVans();
+      renderSummary();
+      pushUndo(`Van trip deleted at ${nowReadable()}.`, () => van.trips.splice(index, 0, removed));
+    }
+
+    function toCSV(rows, headers) {
+      const escapeValue = value => `"${String(value ?? "").replace(/"/g, '""')}"`;
+      const lines = [headers.join(",")];
+      rows.forEach(row => lines.push(headers.map(h => escapeValue(row[h])).join(",")));
+      return lines.join("\n");
+    }
+
+    function downloadText(filename, content, type = "text/plain") {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function markBackupDone() {
+      data.meta.lastBackupDate = todayDate();
+      backupReminderDismissedAt = "";
+      saveData();
+      updateBackupReminder();
+    }
+
+    function exportJSON() {
+      downloadText(`pharma-backup-${todayDate()}.json`, JSON.stringify(data, null, 2), "application/json");
+      markBackupDone();
+    }
+
+    function exportCSV() {
+      downloadText(`expenses-${todayDate()}.csv`, toCSV(data.expenses, ["name", "amount", "date"]), "text/csv");
+      downloadText(`sales-${todayDate()}.csv`, toCSV(data.sales, ["company", "amount", "date"]), "text/csv");
+      downloadText(`payments-${todayDate()}.csv`, toCSV(data.payments, ["company", "medium", "amount", "date", "note"]), "text/csv");
+      downloadText(`stock-${todayDate()}.csv`, toCSV(data.stock, ["name", "company", "qty"]), "text/csv");
+      markBackupDone();
+    }
+
+    function dismissBackupReminder() {
+      backupReminderDismissedAt = todayDate();
+      updateBackupReminder();
+    }
+
+    function updateBackupReminder() {
+      const banner = document.getElementById("backupReminder");
+      const user = getCurrentUser();
+      if (!user) return banner.classList.add("hidden");
+      const backedUpToday = data?.meta?.lastBackupDate === todayDate();
+      const dismissedToday = backupReminderDismissedAt === todayDate();
+      banner.classList.toggle("hidden", backedUpToday || dismissedToday);
+    }
+
+    function importBackupFile(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || "{}"));
+          if (!Array.isArray(parsed.expenses) || !Array.isArray(parsed.sales) || !Array.isArray(parsed.payments) || !Array.isArray(parsed.vans) || !Array.isArray(parsed.stock) || !Array.isArray(parsed.users)) {
+            throw new Error("Invalid backup format.");
+          }
+          if (!confirm("Import will replace current data. Continue?")) return;
+          data = {
+            expenses: parsed.expenses,
+            sales: parsed.sales,
+            payments: parsed.payments,
+            vans: parsed.vans,
+            stock: parsed.stock,
+            users: parsed.users,
+            currentUser: null,
+            meta: {
+              lastSavedAt: parsed?.meta?.lastSavedAt || "",
+              lastBackupDate: parsed?.meta?.lastBackupDate || "",
+              workDate: parsed?.meta?.workDate || todayDate()
+            }
+          };
+          await migrateLegacyUsers();
+          saveData();
+          updateAuthUI();
+          alert("Backup imported successfully. Please login again.");
+        } catch (err) {
+          alert(err.message || "Could not import backup.");
+        } finally {
+          event.target.value = "";
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function renderExpenses() {
+      const expenseList = document.getElementById("expenseList");
+      const expenseTotal = document.getElementById("expenseTotal");
+      expenseList.innerHTML = "";
+      let total = 0;
+      data.expenses.forEach((expense, index) => {
+        total += expense.amount;
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<div class="item-left"><div class="name">${expense.name}</div><div class="meta">${formatPKR(expense.amount)} | ${expense.date}</div></div><div class="actions"><button class="edit-btn" onclick="editExpense(${index})">Edit</button><button class="delete-btn" onclick="deleteExpense(${index})">Delete</button></div>`;
+        expenseList.appendChild(item);
+      });
+      expenseTotal.textContent = formatPKR(total);
+    }
+
+    function renderSales() {
+      const salesList = document.getElementById("salesList");
+      const salesTotal = document.getElementById("salesTotal");
+      const companyFilter = document.getElementById("companyFilter").value;
+      salesList.innerHTML = "";
+      let total = 0;
+      data.sales.forEach((sale, index) => {
+        if (companyFilter && sale.company !== companyFilter) return;
+        total += sale.amount;
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<div class="item-left"><div class="name">${sale.company}</div><div class="meta">${formatPKR(sale.amount)} | ${sale.date}</div></div><div class="actions"><button class="edit-btn" onclick="editSale(${index})">Edit</button><button class="delete-btn" onclick="deleteSale(${index})">Delete</button></div>`;
+        salesList.appendChild(item);
+      });
+      salesTotal.textContent = formatPKR(total);
+    }
+
+    function renderPayments() {
+      const paymentList = document.getElementById("paymentList");
+      const paymentTotal = document.getElementById("paymentTotal");
+      paymentList.innerHTML = "";
+      const mediumTotals = { UBL: 0, HBL: 0, Konnect: 0, "Cash in hand": 0 };
+      let total = 0;
+      data.payments.forEach((payment, index) => {
+        total += payment.amount;
+        if (mediumTotals[payment.medium] !== undefined) mediumTotals[payment.medium] += payment.amount;
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<div class="item-left"><div class="name">${payment.company}</div><div class="meta">${formatPKR(payment.amount)} | ${payment.medium} | ${payment.date}</div><div class="meta">${payment.note || "No note"}</div></div><div class="actions"><button class="edit-btn" onclick="editPayment(${index})">Edit</button><button class="delete-btn" onclick="deletePayment(${index})">Delete</button></div>`;
+        paymentList.appendChild(item);
+      });
+      paymentTotal.textContent = formatPKR(total);
+      document.getElementById("mediumUBL").textContent = formatPKR(mediumTotals.UBL);
+      document.getElementById("mediumHBL").textContent = formatPKR(mediumTotals.HBL);
+      document.getElementById("mediumKonnect").textContent = formatPKR(mediumTotals.Konnect);
+      document.getElementById("mediumCash").textContent = formatPKR(mediumTotals["Cash in hand"]);
+    }
+
+    function renderVanSelect() {
+      const select = document.getElementById("tripVanSelect");
+      select.innerHTML = '<option value="">Select van</option>';
+      data.vans.forEach(van => {
+        const option = document.createElement("option");
+        option.value = van.id;
+        option.textContent = van.number;
+        select.appendChild(option);
+      });
+    }
+
+    function renderVans() {
+      const vanCards = document.getElementById("vanCards");
+      document.getElementById("vanCount").textContent = data.vans.length;
+      vanCards.innerHTML = "";
+      renderVanSelect();
+      if (!data.vans.length) {
+        vanCards.innerHTML = "<div class='meta'>No vans added yet.</div>";
+        return;
+      }
+      data.vans.forEach((van, index) => {
+        const card = document.createElement("div");
+        card.className = "van-card";
+        const tripsHtml = van.trips.length
+          ? van.trips.map(trip => `<div class="item" style="margin-top:10px;"><div class="item-left"><div class="name">${trip.date} | ${trip.exitTime}</div><div class="meta">Driver: ${trip.driver}</div><div class="meta">Supplyman: ${trip.supplyman}</div><div class="meta">Tour: ${trip.tourType || "-"}</div><div class="meta">Route: ${trip.route || "-"}</div></div><div class="actions"><button class="edit-btn" onclick="editVanTrip(${van.id}, ${trip.id})">Edit</button><button class="delete-btn" onclick="deleteVanTrip(${van.id}, ${trip.id})">Delete</button></div></div>`).join("")
+          : "<div class='meta'>No trips added yet.</div>";
+        card.innerHTML = `<div class="row-line"><div><strong>${van.number}</strong><div class="meta">Trips: ${van.trips.length}</div></div><div class="actions"><button class="edit-btn" onclick="editVan(${index})">Edit Van</button><button class="delete-btn" onclick="deleteVan(${index})">Delete Van</button></div></div>${tripsHtml}`;
+        vanCards.appendChild(card);
+      });
+    }
+
+    function renderStock() {
+      const stockList = document.getElementById("stockList");
+      stockList.innerHTML = "";
+      data.stock.forEach((itemData, index) => {
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<div class="item-left"><div class="name">${itemData.name}</div><div class="meta">${itemData.company} | Qty: ${itemData.qty}</div></div><div class="actions"><button class="edit-btn" onclick="editStock(${index})">Edit</button><button class="delete-btn" onclick="deleteStock(${index})">Delete</button></div>`;
+        stockList.appendChild(item);
+      });
+      document.getElementById("stockCount").textContent = data.stock.length;
+    }
+
+    function renderCompanyOutstanding() {
+      const companyOutstanding = document.getElementById("companyOutstanding");
+      companyOutstanding.innerHTML = "";
+      const saleTotals = {};
+      const paymentTotals = {};
+      COMPANY_NAMES.forEach(company => {
+        saleTotals[company] = 0;
+        paymentTotals[company] = 0;
+      });
+      data.sales.forEach(sale => {
+        if (saleTotals[sale.company] === undefined) saleTotals[sale.company] = 0;
+        saleTotals[sale.company] += sale.amount;
+      });
+      data.payments.forEach(payment => {
+        if (paymentTotals[payment.company] === undefined) paymentTotals[payment.company] = 0;
+        paymentTotals[payment.company] += payment.amount;
+      });
+      COMPANY_NAMES.forEach(company => {
+        const outstanding = saleTotals[company] - paymentTotals[company];
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${company}</span><strong>${formatPKR(outstanding)}</strong>`;
+        companyOutstanding.appendChild(row);
+      });
+    }
+
+    function renderPaymentMediumTotals() {
+      const box = document.getElementById("paymentMediumTotals");
+      box.innerHTML = "";
+      const totals = { UBL: 0, HBL: 0, Konnect: 0, "Cash in hand": 0 };
+      data.payments.forEach(payment => {
+        if (totals[payment.medium] !== undefined) totals[payment.medium] += payment.amount;
+      });
+      Object.keys(totals).forEach(medium => {
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${medium}</span><strong>${formatPKR(totals[medium])}</strong>`;
+        box.appendChild(row);
+      });
+    }
+
+    function renderTodayWorkLeaderboard() {
+      const board = document.getElementById("todayWorkLeaderboard");
+      if (!board) return;
+      board.innerHTML = "";
+      const key = todayDate();
+      const ranked = [...data.users]
+        .map(user => ({ name: user.name, role: user.role, ms: user.dailyActiveMs?.[key] || 0 }))
+        .sort((a, b) => b.ms - a.ms);
+      ranked.forEach((entry, index) => {
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${index + 1}. ${entry.name} <span class="meta">(${entry.role})</span></span><strong>${formatDuration(entry.ms)}</strong>`;
+        board.appendChild(row);
+      });
+      if (!ranked.length) board.innerHTML = "<div class='meta'>No users available.</div>";
+    }
+
+    function renderSummary() {
+      const totalExpenses = data.expenses.reduce((sum, item) => sum + item.amount, 0);
+      const totalSales = data.sales.reduce((sum, item) => sum + item.amount, 0);
+      const totalReceived = data.payments.reduce((sum, item) => sum + item.amount, 0);
+      const outstanding = totalSales - totalReceived;
+      const netProfit = totalSales - totalExpenses;
+      document.getElementById("summaryExpenses").textContent = formatPKR(totalExpenses);
+      document.getElementById("summarySales").textContent = formatPKR(totalSales);
+      document.getElementById("summaryReceived").textContent = formatPKR(totalReceived);
+      document.getElementById("summaryOutstanding").textContent = formatPKR(outstanding);
+      document.getElementById("summaryProfit").textContent = formatPKR(netProfit);
+      document.getElementById("summaryVans").textContent = data.vans.length;
+      document.getElementById("profitCard").className = "summary-item " + (netProfit >= 0 ? "profit" : "loss");
+      renderCompanyOutstanding();
+      renderPaymentMediumTotals();
+      renderTodayWorkLeaderboard();
+    }
+
+    function renderUsers() {
+      const userList = document.getElementById("userList");
+      userList.innerHTML = "";
+      data.users.forEach((user, index) => {
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<div class="item-left"><div class="name">${user.name}</div><div class="meta">Username: ${user.username}</div><div class="meta">Role: ${user.role}${user.mustChangePassword ? " | Password reset required" : ""}</div><div class="meta">Today: ${formatDuration(user.dailyActiveMs?.[todayDate()] || 0)} | Total: ${formatDuration(user.totalActiveMs || 0)}</div></div><div class="actions"><button class="edit-btn" onclick="editUser(${index})">Edit</button><button class="delete-btn" onclick="deleteUser(${index})">Delete</button></div>`;
+        userList.appendChild(item);
+      });
+    }
+
+    function renderAll() {
+      renderExpenses();
+      renderSales();
+      renderPayments();
+      renderVans();
+      renderStock();
+      renderSummary();
+      renderUsers();
+      updateWorkDateStats();
+    }
+
+    async function init() {
+      fillCompanySelect("saleCompany");
+      fillCompanySelect("companyFilter", true);
+      fillCompanySelect("paymentCompany");
+      fillCompanySelect("stockCompany");
+      document.getElementById("workDateInput").addEventListener("change", event => setWorkDate(event.target.value));
+      document.getElementById("importBackupFile").addEventListener("change", importBackupFile);
+      registerActivityEvents();
+      await migrateLegacyUsers();
+      syncFormDatesFromWorkDate();
+      updateLiveClock();
+      setInterval(updateLiveClock, 1000);
+      updateAuthUI();
+    }
+
+    init();
+  </script>
+</body>
+</html>
