@@ -2297,5 +2297,33 @@
 
     init();
   </script>
+<!-- ===================== -->
+<!-- SUPABASE CONNECTION -->
+<!-- ===================== -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // CONNECT TO SUPABASE
+  const supabaseUrl = "https://iuaslcgvjhmhbgfwifnn.supabase.co"
+  const supabaseKey = "sb_publishable_0Ai-6DDcm4SpzcntJO8jzQ_G6JwDsGq"
+
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+  // TEST CONNECTION
+  async function testConnection() {
+    const { data, error } = await supabase
+      .from('test')
+      .select('*')
+
+    console.log("SUPABASE DATA:", data)
+    console.log("SUPABASE ERROR:", error)
+  }
+
+  testConnection()
+</script>
+
+<!-- ===================== -->
+<!-- END SUPABASE -->
+<!-- ===================== -->
 </body></html>
