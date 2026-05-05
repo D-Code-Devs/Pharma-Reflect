@@ -1,9 +1,9 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pharma Distribution Management App</title>
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///Users/dawoodibrahim/Desktop/my-first-app/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHARMA REFLECT</title>
   <style>
     * { box-sizing: border-box; }
     :root {
@@ -100,6 +100,9 @@
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
+
+    .summary-view { display: none; }
+    .summary-view.active { display: block; }
 
     .section-card {
       background: #f8fafc;
@@ -434,17 +437,17 @@
   </style>
 </head>
 <body>
-  <div id="loginScreen" class="login-card">
+  <div id="loginScreen" class="login-card hidden">
     <div class="header">
       <h1>Company Dashboard Login</h1>
       <p>Role-based access for each department</p>
     </div>
     <div class="login-content">
       <div class="form-row">
-        <input type="text" id="loginUsername" placeholder="Username" />
+        <input type="text" id="loginUsername" placeholder="Username">
       </div>
       <div class="form-row">
-        <input type="password" id="loginPassword" placeholder="Password" />
+        <input type="password" id="loginPassword" placeholder="Password">
       </div>
       <div class="form-row">
         <button class="add-btn" onclick="login()">Login</button>
@@ -455,10 +458,10 @@
     </div>
   </div>
 
-  <div id="appScreen" class="app hidden">
+  <div id="appScreen" class="app">
     <div class="header">
-      <h1>Pharma Distribution Management App</h1>
-      <p>Department-wise data entry with role-based access</p>
+      <h1>PHARMA REFLECT</h1>
+      <p>ISD Healthcare Pvt. Ltd.</p>
     </div>
 
     <div class="content">
@@ -478,29 +481,29 @@
       </div>
       <div class="top-bar">
         <div>
-          Logged in as: <strong id="currentUserName">-</strong>
-          (<span id="currentUserRole">-</span>)
-          <div class="status-row">Last saved: <span id="lastSavedAt">Never</span></div>
-          <div class="status-row">Session: <span id="sessionDuration">00:00:00</span> | Today worked: <span id="todayWorkDuration">00:00:00</span> | Total work time: <span id="totalWorkDuration">00:00:00</span></div>
+          Logged in as: <strong id="currentUserName">Administrator</strong>
+          (<span id="currentUserRole">Admin</span>)
+          <div class="status-row">Last saved: <span id="lastSavedAt">29-Apr-2026, 10:40 am</span></div>
+          <div class="status-row">Session: <span id="sessionDuration">00:07:37</span> | Today worked: <span id="todayWorkDuration">00:07:37</span> | Total work time: <span id="totalWorkDuration">00:07:37</span></div>
         </div>
         <div class="actions">
           <button class="secondary-btn" onclick="exportJSON()">Export JSON</button>
           <button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
           <label class="secondary-btn" for="importBackupFile" style="display:inline-flex;align-items:center;">Import JSON</label>
-          <input id="importBackupFile" type="file" accept=".json,application/json" class="hidden" />
+          <input id="importBackupFile" type="file" accept=".json,application/json" class="hidden">
           <button class="secondary-btn" onclick="logout()">Logout</button>
         </div>
       </div>
       <div class="context-bar">
         <div class="context-left">
           <strong>Work Date</strong>
-          <input type="date" id="workDateInput" />
-          <span id="workDayLabel" class="pill">-</span>
+          <input type="date" id="workDateInput">
+          <span id="workDayLabel" class="pill">Wednesday</span>
           <button class="secondary-btn" onclick="setWorkDateToToday()">Today</button>
           <button class="secondary-btn" onclick="setWorkDateToYesterday()">Yesterday</button>
         </div>
         <div class="context-right">
-          <span class="pill">Live: <span id="liveClock">--:--</span></span>
+          <span class="pill">Live: <span id="liveClock">10:48:21 am</span></span>
         </div>
       </div>
       <div class="mini-cards">
@@ -513,7 +516,7 @@
           <div class="value" id="workDateSales">Rs 0</div>
         </div>
         <div class="mini-card">
-          <div class="label">Payments on Work Date</div>
+          <div class="label">Recovery on Work Date</div>
           <div class="value" id="workDatePayments">Rs 0</div>
         </div>
         <div class="mini-card">
@@ -523,22 +526,23 @@
       </div>
 
       <div class="tabs">
-        <button class="tab-btn active" data-tab="expenses" onclick="showTab('expenses')">Expenses</button>
-        <button class="tab-btn" data-tab="sales" onclick="showTab('sales')">Sales</button>
-        <button class="tab-btn" data-tab="payments" onclick="showTab('payments')">Payments</button>
-        <button class="tab-btn" data-tab="vans" onclick="showTab('vans')">Supply Vans</button>
-        <button class="tab-btn" data-tab="inventory" onclick="showTab('inventory')">Inventory</button>
-        <button class="tab-btn" data-tab="summary" onclick="showTab('summary')">Summary</button>
-        <button class="tab-btn" data-tab="users" onclick="showTab('users')">Users</button>
+        <button class="tab-btn" data-tab="expenses" onclick="showTab(&#39;expenses&#39;)">Expenses</button>
+        <button class="tab-btn" data-tab="sales" onclick="showTab(&#39;sales&#39;)">Sales</button>
+        <button class="tab-btn" data-tab="payments" onclick="showTab(&#39;payments&#39;)">Recovery</button>
+        <button class="tab-btn" data-tab="claims" onclick="showTab(&#39;claims&#39;)">Claims</button>
+        <button class="tab-btn" data-tab="vans" onclick="showTab(&#39;vans&#39;)">Supply Vans</button>
+        <button class="tab-btn" data-tab="inventory" onclick="showTab(&#39;inventory&#39;)">Inventory</button>
+        <button class="tab-btn active" data-tab="summary" onclick="showTab(&#39;summary&#39;)">Summary</button>
+        <button class="tab-btn" data-tab="users" onclick="showTab(&#39;users&#39;)">Users</button>
       </div>
 
-      <div id="expenses" class="tab-content active">
+      <div id="expenses" class="tab-content">
         <div class="section-card">
           <h2 class="section-title">Expenses</h2>
           <div class="form-row">
-            <input type="text" id="expenseName" placeholder="Expense name" />
-            <input type="number" id="expenseAmount" placeholder="Amount" />
-            <input type="date" id="expenseDate" />
+            <input type="text" id="expenseName" placeholder="Expense name">
+            <input type="number" id="expenseAmount" placeholder="Amount">
+            <input type="date" id="expenseDate">
             <button class="add-btn" onclick="addExpense()">Add</button>
           </div>
           <div id="expenseList" class="list"></div>
@@ -548,28 +552,47 @@
 
       <div id="sales" class="tab-content">
         <div class="section-card">
-          <h2 class="section-title">Sales</h2>
+          <h2 class="section-title">Company Sales</h2>
           <div class="form-row">
-            <input type="number" id="saleAmount" placeholder="Sale amount" />
-            <select id="saleCompany"></select>
-            <input type="date" id="saleDate" />
-            <button class="add-btn" onclick="addSale()">Add</button>
+            <input type="number" id="companySaleAmount" placeholder="Sale amount">
+            <select id="companySaleCompany"><option value="">Select company</option><option value="Sami Pharmaceuticals">Sami Pharmaceuticals</option><option value="Abbott Laboratories">Abbott Laboratories</option><option value="Reckitt Benkiser">Reckitt Benkiser</option><option value="Scilife Pharma">Scilife Pharma</option><option value="Global Laboratories">Global Laboratories</option><option value="IRS">IRS</option></select>
+            <input type="date" id="companySaleDate">
+            <button class="add-btn" onclick="addCompanySale()">Add</button>
           </div>
           <div class="form-row">
-            <select id="companyFilter" onchange="renderSales()"></select>
+            <select id="companySaleFilter" onchange="renderCompanySales()"><option value="">All companies</option><option value="Sami Pharmaceuticals">Sami Pharmaceuticals</option><option value="Abbott Laboratories">Abbott Laboratories</option><option value="Reckitt Benkiser">Reckitt Benkiser</option><option value="Scilife Pharma">Scilife Pharma</option><option value="Global Laboratories">Global Laboratories</option><option value="IRS">IRS</option></select>
           </div>
-          <div id="salesList" class="list"></div>
-          <div class="total-box">Total Sales: <span id="salesTotal">Rs 0</span></div>
+          <div id="companySalesList" class="list"></div>
+          <div class="total-box">Total Company Sales: <span id="companySalesTotal">Rs 0</span></div>
+        </div>
+
+        <div class="section-card">
+          <h2 class="section-title">Booker Sales</h2>
+          <div class="box">
+            <h3>Booker management</h3>
+            <div class="form-row">
+              <input type="text" id="bookerName" placeholder="Booker name">
+              <button class="add-btn" onclick="addBooker()">Add Booker</button>
+            </div>
+            <div id="bookerList" class="list"></div>
+          </div>
+          <div class="form-row">
+            <input type="number" id="bookerSaleAmount" placeholder="Booking sale amount">
+            <select id="bookerSaleBooker"><option value="">Select booker</option></select>
+            <input type="date" id="bookerSaleDate">
+            <button class="add-btn" onclick="addBookerSale()">Add</button>
+          </div>
+          <div id="bookerSalesList" class="list"></div>
+          <div class="total-box">Total Booker Sales: <span id="bookerSalesTotal">Rs 0</span></div>
         </div>
       </div>
 
       <div id="payments" class="tab-content">
         <div class="section-card">
-          <h2 class="section-title">Payments Received</h2>
-          <p class="mini-note">Accounts role can enter payments. Admin can review everything.</p>
+          <h2 class="section-title">Recovery</h2>
+          <p class="mini-note">Accounts role can enter recovery from sales. Admin can review everything.</p>
           <div class="form-row">
-            <input type="number" id="paymentAmount" placeholder="Received amount" />
-            <select id="paymentCompany"></select>
+            <input type="number" id="paymentAmount" placeholder="Recovery amount">
             <select id="paymentMedium">
               <option value="">Select medium</option>
               <option value="UBL">UBL</option>
@@ -577,12 +600,12 @@
               <option value="Konnect">Konnect</option>
               <option value="Cash in hand">Cash in hand</option>
             </select>
-            <input type="date" id="paymentDate" />
-            <input type="text" id="paymentNote" placeholder="Note (optional)" />
-            <button class="add-btn" onclick="addPayment()">Add Payment</button>
+            <input type="date" id="paymentDate">
+            <input type="text" id="paymentNote" placeholder="Note (optional)">
+            <button class="add-btn" onclick="addPayment()">Add Recovery</button>
           </div>
           <div id="paymentList" class="list"></div>
-          <div class="total-box">Total Cash Received: <span id="paymentTotal">Rs 0</span></div>
+          <div class="total-box">Total Recovery: <span id="paymentTotal">Rs 0</span></div>
 
           <div class="payment-mediums">
             <div class="medium-card"><h4>UBL</h4><div id="mediumUBL">Rs 0</div></div>
@@ -597,30 +620,28 @@
         <div class="section-card">
           <h2 class="section-title">Supply Vans</h2>
           <div class="form-row">
-            <input type="text" id="vanNumber" placeholder="Van / car allotted number" />
+            <input type="text" id="vanNumber" placeholder="Van / car allotted number">
             <button class="add-btn" onclick="addVan()">Add Van</button>
           </div>
 
           <div class="form-row">
-            <select id="tripVanSelect">
-              <option value="">Select van</option>
-            </select>
-            <input type="date" id="tripDate" />
-            <input type="time" id="tripExitTime" />
-            <input type="text" id="tripDriver" placeholder="Driver name" />
-            <input type="text" id="tripSupplyman" placeholder="Supplyman name" />
+            <select id="tripVanSelect"><option value="">Select van</option><option value="1777440842338">LE-3500</option><option value="1777440848935">ABU-348</option><option value="1777440853703">BFF-759</option></select>
+            <input type="date" id="tripDate">
+            <input type="time" id="tripExitTime">
+            <input type="text" id="tripDriver" placeholder="Driver name">
+            <input type="text" id="tripSupplyman" placeholder="Supplyman name">
             <select id="tripTourType">
               <option value="">Tour type</option>
               <option value="City">City</option>
               <option value="Intercity">Intercity</option>
               <option value="Emergency">Emergency</option>
             </select>
-            <input type="text" id="tripRoute" placeholder="Route / Area" />
+            <input type="text" id="tripRoute" placeholder="Route / Area">
             <button class="add-btn" onclick="addVanTrip()">Add Trip</button>
           </div>
 
-          <div class="total-box">Total Vans Added: <span id="vanCount">0</span></div>
-          <div id="vanCards" class="van-grid"></div>
+          <div class="total-box">Total Vans Added: <span id="vanCount">3</span></div>
+          <div id="vanCards" class="van-grid"><div class="van-card"><div class="row-line"><div><strong>LE-3500</strong><div class="meta">Trips: 1</div></div><div class="actions"><button class="edit-btn" onclick="editVan(0)">Edit Van</button><button class="delete-btn" onclick="deleteVan(0)">Delete Van</button></div></div><div class="item" style="margin-top:10px;"><div class="item-left"><div class="name">2026-04-29 | 09:40</div><div class="meta">Driver: Sulaiman</div><div class="meta">Supplyman: Daud</div><div class="meta">Tour: City</div><div class="meta">Route: home to office</div></div><div class="actions"><button class="edit-btn" onclick="editVanTrip(1777440842338, 1777440872908)">Edit</button><button class="delete-btn" onclick="deleteVanTrip(1777440842338, 1777440872908)">Delete</button></div></div></div><div class="van-card"><div class="row-line"><div><strong>ABU-348</strong><div class="meta">Trips: 2</div></div><div class="actions"><button class="edit-btn" onclick="editVan(1)">Edit Van</button><button class="delete-btn" onclick="deleteVan(1)">Delete Van</button></div></div><div class="item" style="margin-top:10px;"><div class="item-left"><div class="name">2026-04-29 | 08:00</div><div class="meta">Driver: Ibrahim</div><div class="meta">Supplyman: nil</div><div class="meta">Tour: City</div><div class="meta">Route: home to office</div></div><div class="actions"><button class="edit-btn" onclick="editVanTrip(1777440848935, 1777440906307)">Edit</button><button class="delete-btn" onclick="deleteVanTrip(1777440848935, 1777440906307)">Delete</button></div></div><div class="item" style="margin-top:10px;"><div class="item-left"><div class="name">2026-04-28 | 08:00</div><div class="meta">Driver: Riaz</div><div class="meta">Supplyman: Ibrahim</div><div class="meta">Tour: Intercity</div><div class="meta">Route: Mwi and Jbd</div></div><div class="actions"><button class="edit-btn" onclick="editVanTrip(1777440848935, 1777440950819)">Edit</button><button class="delete-btn" onclick="deleteVanTrip(1777440848935, 1777440950819)">Delete</button></div></div></div><div class="van-card"><div class="row-line"><div><strong>BFF-759</strong><div class="meta">Trips: 0</div></div><div class="actions"><button class="edit-btn" onclick="editVan(2)">Edit Van</button><button class="delete-btn" onclick="deleteVan(2)">Delete Van</button></div></div><div class="meta">No trips added yet.</div></div></div>
         </div>
       </div>
 
@@ -628,9 +649,9 @@
         <div class="section-card">
           <h2 class="section-title">Inventory</h2>
           <div class="form-row">
-            <input type="text" id="stockName" placeholder="Product name" />
-            <select id="stockCompany"></select>
-            <input type="number" id="stockQty" placeholder="Quantity" />
+            <input type="text" id="stockName" placeholder="Product name">
+            <select id="stockCompany"><option value="">Select company</option><option value="Sami Pharmaceuticals">Sami Pharmaceuticals</option><option value="Abbott Laboratories">Abbott Laboratories</option><option value="Reckitt Benkiser">Reckitt Benkiser</option><option value="Scilife Pharma">Scilife Pharma</option><option value="Global Laboratories">Global Laboratories</option><option value="IRS">IRS</option></select>
+            <input type="number" id="stockQty" placeholder="Quantity">
             <button class="add-btn" onclick="addStock()">Add Stock</button>
           </div>
           <div id="stockList" class="list"></div>
@@ -638,32 +659,100 @@
         </div>
       </div>
 
-      <div id="summary" class="tab-content">
+      <div id="claims" class="tab-content">
+        <div class="section-card">
+          <h2 class="section-title">Outstanding Claims</h2>
+          <p class="mini-note">Track company-specific claims separately from sales and recovery.</p>
+          <div class="form-row">
+            <select id="claimCompany"><option value="">Select company</option></select>
+            <input type="number" id="claimAmount" placeholder="Claim amount">
+            <input type="date" id="claimDate">
+            <button class="add-btn" onclick="addOutstandingClaim()">Add Claim</button>
+          </div>
+          <div id="claimList" class="list"></div>
+          <div class="total-box">Total Outstanding Claims: <span id="claimTotal">Rs 0</span></div>
+        </div>
+      </div>
+
+      <div id="summary" class="tab-content active">
         <div class="section-card">
           <h2 class="section-title">Summary</h2>
 
-          <div class="summary-card">
-            <div class="summary-item">Total Expenses: <span id="summaryExpenses">Rs 0</span></div>
-            <div class="summary-item">Total Sales: <span id="summarySales">Rs 0</span></div>
-            <div class="summary-item">Total Cash Received: <span id="summaryReceived">Rs 0</span></div>
-            <div class="summary-item">Outstanding Balance: <span id="summaryOutstanding">Rs 0</span></div>
-            <div class="summary-item" id="profitCard">Net Profit: <span id="summaryProfit">Rs 0</span></div>
-            <div class="summary-item">Total Supply Vans: <span id="summaryVans">0</span></div>
+          <div class="context-bar">
+            <div class="context-left">
+              <strong>Date Range Filter</strong>
+              <input type="date" id="summaryStartDate" onchange="applyDateRangeFilter()" placeholder="From">
+              <input type="date" id="summaryEndDate" onchange="applyDateRangeFilter()" placeholder="To">
+              <button class="secondary-btn" onclick="setSummaryRangeToday()">Today</button>
+              <button class="secondary-btn" onclick="setSummaryRangeThisMonth()">This Month</button>
+            </div>
+            <div class="context-right">
+              <button class="tab-btn active" data-summary-type="daily" onclick="showSummaryType('daily')">Daily Summary</button>
+              <button class="tab-btn" data-summary-type="monthly" onclick="showSummaryType('monthly')">Monthly Summary</button>
+            </div>
           </div>
 
-          <div class="grid-two">
-            <div class="box">
-              <h3>Company-wise Outstanding</h3>
-              <div id="companyOutstanding"></div>
+          <div id="dailySummaryView" class="summary-view active">
+            <div class="summary-card">
+              <div class="summary-item">Daily Total Expenses: <span id="dailySummaryExpenses">Rs 0</span></div>
+              <div class="summary-item">Daily Total Sales: <span id="dailySummarySales">Rs 0</span></div>
+              <div class="summary-item">Daily Total Recovery: <span id="dailySummaryReceived">Rs 0</span></div>
+              <div class="summary-item">Daily Outstanding: <span id="dailySummaryOutstanding">Rs 0</span></div>
+              <div class="summary-item profit" id="dailyProfitCard">Daily Net Profit: <span id="dailySummaryProfit">Rs 0</span></div>
+            </div>
+
+            <div class="grid-two">
+              <div class="box">
+                <h3>Daily Company-wise Outstanding</h3>
+                <div id="dailyCompanyOutstanding"><div class="row-line"><span>Sami Pharmaceuticals</span><strong>Rs 0</strong></div><div class="row-line"><span>Abbott Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>Reckitt Benkiser</span><strong>Rs 0</strong></div><div class="row-line"><span>Scilife Pharma</span><strong>Rs 0</strong></div><div class="row-line"><span>Global Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>IRS</span><strong>Rs 0</strong></div></div>
+              </div>
+              <div class="box">
+                <h3>Daily Outstanding Claims</h3>
+                <div id="dailyOutstandingClaims"><div class="row-line"><span>Sami Pharmaceuticals</span><strong>Rs 0</strong></div><div class="row-line"><span>Abbott Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>Reckitt Benkiser</span><strong>Rs 0</strong></div><div class="row-line"><span>Scilife Pharma</span><strong>Rs 0</strong></div><div class="row-line"><span>Global Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>IRS</span><strong>Rs 0</strong></div></div>
+              </div>
             </div>
             <div class="box">
-              <h3>Payment Medium Totals</h3>
-              <div id="paymentMediumTotals"></div>
+              <h3>Daily Payment Medium Totals</h3>
+              <div id="dailyPaymentMediumTotals"><div class="row-line"><span>UBL</span><strong>Rs 0</strong></div><div class="row-line"><span>HBL</span><strong>Rs 0</strong></div><div class="row-line"><span>Konnect</span><strong>Rs 0</strong></div><div class="row-line"><span>Cash in hand</span><strong>Rs 0</strong></div></div>
+            </div>
+            <div class="box">
+              <h3>Daily Booker Sales</h3>
+              <div id="dailyBookerSummary"><div class="meta">No booker sales recorded for selected date.</div></div>
             </div>
           </div>
-          <div class="box">
+
+          <div id="monthlySummaryView" class="summary-view hidden">
+            <div class="summary-card">
+              <div class="summary-item">Monthly Total Expenses: <span id="monthlySummaryExpenses">Rs 0</span></div>
+              <div class="summary-item">Monthly Total Sales: <span id="monthlySummarySales">Rs 0</span></div>
+              <div class="summary-item">Monthly Total Recovery: <span id="monthlySummaryReceived">Rs 0</span></div>
+              <div class="summary-item">Monthly Outstanding: <span id="monthlySummaryOutstanding">Rs 0</span></div>
+              <div class="summary-item profit" id="monthlyProfitCard">Monthly Net Profit: <span id="monthlySummaryProfit">Rs 0</span></div>
+            </div>
+
+            <div class="grid-two">
+              <div class="box">
+                <h3>Monthly Company-wise Outstanding</h3>
+                <div id="monthlyCompanyOutstanding"><div class="row-line"><span>Sami Pharmaceuticals</span><strong>Rs 0</strong></div><div class="row-line"><span>Abbott Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>Reckitt Benkiser</span><strong>Rs 0</strong></div><div class="row-line"><span>Scilife Pharma</span><strong>Rs 0</strong></div><div class="row-line"><span>Global Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>IRS</span><strong>Rs 0</strong></div></div>
+              </div>
+              <div class="box">
+                <h3>Monthly Outstanding Claims</h3>
+                <div id="monthlyOutstandingClaims"><div class="row-line"><span>Sami Pharmaceuticals</span><strong>Rs 0</strong></div><div class="row-line"><span>Abbott Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>Reckitt Benkiser</span><strong>Rs 0</strong></div><div class="row-line"><span>Scilife Pharma</span><strong>Rs 0</strong></div><div class="row-line"><span>Global Laboratories</span><strong>Rs 0</strong></div><div class="row-line"><span>IRS</span><strong>Rs 0</strong></div></div>
+              </div>
+            </div>
+            <div class="box">
+              <h3>Monthly Payment Medium Totals</h3>
+              <div id="monthlyPaymentMediumTotals"><div class="row-line"><span>UBL</span><strong>Rs 0</strong></div><div class="row-line"><span>HBL</span><strong>Rs 0</strong></div><div class="row-line"><span>Konnect</span><strong>Rs 0</strong></div><div class="row-line"><span>Cash in hand</span><strong>Rs 0</strong></div></div>
+            </div>
+            <div class="box">
+              <h3>Monthly Booker Sales</h3>
+              <div id="monthlyBookerSummary"><div class="meta">No booker sales recorded for selected month.</div></div>
+            </div>
+          </div>
+
+          <div class="box" style="margin-top: 18px;">
             <h3>Today Work Leaderboard</h3>
-            <div id="todayWorkLeaderboard"></div>
+            <div id="todayWorkLeaderboard"><div class="row-line"><span>1. Administrator <span class="meta">(Admin)</span></span><strong>00:00:00</strong></div><div class="row-line"><span>2. Ibrahim <span class="meta">(Admin)</span></span><strong>00:00:00</strong></div><div class="row-line"><span>3. Sana Ullah <span class="meta">(Accounts)</span></span><strong>00:00:00</strong></div><div class="row-line"><span>4. Nadeem <span class="meta">(Sales)</span></span><strong>00:00:00</strong></div><div class="row-line"><span>5. Rehan <span class="meta">(Logistics)</span></span><strong>00:00:00</strong></div></div>
           </div>
         </div>
       </div>
@@ -674,9 +763,9 @@
           <p class="mini-note">Admin can add users and change their roles later. Passwords are stored as hashes.</p>
 
           <div class="form-row">
-            <input type="text" id="userName" placeholder="Full name" />
-            <input type="text" id="userUsername" placeholder="Username" />
-            <input type="password" id="userPassword" placeholder="Password" />
+            <input type="text" id="userName" placeholder="Full name">
+            <input type="text" id="userUsername" placeholder="Username">
+            <input type="password" id="userPassword" placeholder="Password">
             <select id="userRole">
               <option value="">Select role</option>
               <option value="Admin">Admin</option>
@@ -688,7 +777,7 @@
             <button class="add-btn" onclick="addUser()">Add User</button>
           </div>
 
-          <div id="userList" class="list"></div>
+          <div id="userList" class="list"><div class="item"><div class="item-left"><div class="name">Administrator</div><div class="meta">Username: admin</div><div class="meta">Role: Admin</div><div class="meta">Today: 00:00:00 | Total: 00:00:00</div></div><div class="actions"><button class="edit-btn" onclick="editUser(0)">Edit</button><button class="delete-btn" onclick="deleteUser(0)">Delete</button></div></div><div class="item"><div class="item-left"><div class="name">Ibrahim</div><div class="meta">Username: Ib</div><div class="meta">Role: Admin</div><div class="meta">Today: 00:00:00 | Total: 00:00:00</div></div><div class="actions"><button class="edit-btn" onclick="editUser(1)">Edit</button><button class="delete-btn" onclick="deleteUser(1)">Delete</button></div></div><div class="item"><div class="item-left"><div class="name">Sana Ullah</div><div class="meta">Username: SU</div><div class="meta">Role: Accounts</div><div class="meta">Today: 00:00:00 | Total: 00:00:00</div></div><div class="actions"><button class="edit-btn" onclick="editUser(2)">Edit</button><button class="delete-btn" onclick="deleteUser(2)">Delete</button></div></div><div class="item"><div class="item-left"><div class="name">Nadeem</div><div class="meta">Username: ND</div><div class="meta">Role: Sales</div><div class="meta">Today: 00:00:00 | Total: 00:00:00</div></div><div class="actions"><button class="edit-btn" onclick="editUser(3)">Edit</button><button class="delete-btn" onclick="deleteUser(3)">Delete</button></div></div><div class="item"><div class="item-left"><div class="name">Rehan</div><div class="meta">Username: Rh</div><div class="meta">Role: Logistics</div><div class="meta">Today: 00:00:00 | Total: 00:04:05</div></div><div class="actions"><button class="edit-btn" onclick="editUser(4)">Edit</button><button class="delete-btn" onclick="deleteUser(4)">Delete</button></div></div></div>
         </div>
       </div>
     </div>
@@ -709,8 +798,8 @@
     <div class="modal">
       <h3>Password Update Required</h3>
       <p class="mini-note" style="margin-top:0;">Set a new password to continue.</p>
-      <div class="form-row"><input type="password" id="newPasswordInput" placeholder="New password (min 6 chars)" /></div>
-      <div class="form-row"><input type="password" id="confirmPasswordInput" placeholder="Confirm new password" /></div>
+      <div class="form-row"><input type="password" id="newPasswordInput" placeholder="New password (min 6 chars)"></div>
+      <div class="form-row"><input type="password" id="confirmPasswordInput" placeholder="Confirm new password"></div>
       <div class="modal-actions">
         <button class="add-btn" onclick="submitForcedPasswordChange()">Update Password</button>
       </div>
@@ -732,8 +821,8 @@
       "IRS"
     ];
     const ROLE_TABS = {
-      Admin: ["expenses", "sales", "payments", "vans", "inventory", "summary", "users"],
-      Accounts: ["expenses", "payments"],
+      Admin: ["expenses", "sales", "payments", "vans", "inventory", "claims", "summary", "users"],
+      Accounts: ["expenses", "payments", "claims"],
       Sales: ["sales"],
       Logistics: ["vans"],
       Store: ["inventory"]
@@ -775,9 +864,13 @@
       return {
         expenses: [],
         sales: [],
+        companySales: [],
+        bookerSales: [],
         payments: [],
         vans: [],
         stock: [],
+        bookers: [],
+        outstandingClaims: [],
         users: [
           {
             id: 1,
@@ -808,9 +901,13 @@
         return {
           expenses: Array.isArray(parsed.expenses) ? parsed.expenses : [],
           sales: Array.isArray(parsed.sales) ? parsed.sales : [],
+          companySales: Array.isArray(parsed.companySales) ? parsed.companySales : [],
+          bookerSales: Array.isArray(parsed.bookerSales) ? parsed.bookerSales : [],
           payments: Array.isArray(parsed.payments) ? parsed.payments : [],
           vans: Array.isArray(parsed.vans) ? parsed.vans : [],
           stock: Array.isArray(parsed.stock) ? parsed.stock : [],
+          bookers: Array.isArray(parsed.bookers) ? parsed.bookers : [],
+          outstandingClaims: Array.isArray(parsed.outstandingClaims) ? parsed.outstandingClaims : [],
           users: Array.isArray(parsed.users) && parsed.users.length ? parsed.users : defaults.users,
           currentUser: parsed.currentUser || null,
           meta: {
@@ -889,7 +986,7 @@
 
     function syncFormDatesFromWorkDate() {
       const workDate = data?.meta?.workDate || todayDate();
-      ["expenseDate", "saleDate", "paymentDate", "tripDate"].forEach(id => {
+      ["expenseDate", "companySaleDate", "bookerSaleDate", "paymentDate", "tripDate"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = workDate;
       });
@@ -920,11 +1017,12 @@
     function updateWorkDateStats() {
       const workDate = data?.meta?.workDate || todayDate();
       const expenses = data.expenses.filter(item => item.date === workDate);
-      const sales = data.sales.filter(item => item.date === workDate);
+      const companySales = data.companySales.filter(item => item.date === workDate);
+      const bookerSales = data.bookerSales.filter(item => item.date === workDate);
       const payments = data.payments.filter(item => item.date === workDate);
-      const totalEntries = expenses.length + sales.length + payments.length;
+      const totalEntries = expenses.length + companySales.length + bookerSales.length + payments.length;
       const totalExpenseAmount = expenses.reduce((sum, item) => sum + item.amount, 0);
-      const totalSalesAmount = sales.reduce((sum, item) => sum + item.amount, 0);
+      const totalSalesAmount = [...companySales, ...bookerSales].reduce((sum, item) => sum + item.amount, 0);
       const totalPaymentAmount = payments.reduce((sum, item) => sum + item.amount, 0);
       document.getElementById("workDateEntryCount").textContent = String(totalEntries);
       document.getElementById("workDateExpenses").textContent = formatPKR(totalExpenseAmount);
@@ -1193,18 +1291,36 @@
       }
     }
 
-    function addSale() {
+    function addCompanySale() {
       try {
-        const amount = parseAmount(document.getElementById("saleAmount").value, "Sale amount");
-        const company = requireText(document.getElementById("saleCompany").value, "Company");
-        const date = requireText(document.getElementById("saleDate").value, "Date");
-        if (existsDuplicate(data.sales, item => item.company === company && item.amount === amount && item.date === date) && !confirm("Possible duplicate sale. Save anyway?")) return;
-        data.sales.push({ company, amount, date });
+        const amount = parseAmount(document.getElementById("companySaleAmount").value, "Sale amount");
+        const company = requireText(document.getElementById("companySaleCompany").value, "Company");
+        const date = requireText(document.getElementById("companySaleDate").value, "Date");
+        if (existsDuplicate(data.companySales, item => item.company === company && item.amount === amount && item.date === date) && !confirm("Possible duplicate company sale. Save anyway?")) return;
+        data.companySales.push({ id: Date.now(), company, amount, date });
         saveData();
-        document.getElementById("saleAmount").value = "";
-        document.getElementById("saleCompany").value = "";
-        document.getElementById("saleDate").value = todayDate();
-        renderSales();
+        document.getElementById("companySaleAmount").value = "";
+        document.getElementById("companySaleCompany").value = "";
+        document.getElementById("companySaleDate").value = todayDate();
+        renderCompanySales();
+        renderSummary();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function addBookerSale() {
+      try {
+        const amount = parseAmount(document.getElementById("bookerSaleAmount").value, "Booking sale amount");
+        const booker = requireText(document.getElementById("bookerSaleBooker").value, "Booker");
+        const date = requireText(document.getElementById("bookerSaleDate").value, "Date");
+        if (existsDuplicate(data.bookerSales, item => item.booker === booker && item.amount === amount && item.date === date) && !confirm("Possible duplicate booker sale. Save anyway?")) return;
+        data.bookerSales.push({ id: Date.now(), booker, amount, date });
+        saveData();
+        document.getElementById("bookerSaleAmount").value = "";
+        document.getElementById("bookerSaleBooker").value = "";
+        document.getElementById("bookerSaleDate").value = todayDate();
+        renderBookerSales();
         renderSummary();
       } catch (err) {
         alert(err.message);
@@ -1213,16 +1329,14 @@
 
     function addPayment() {
       try {
-        const amount = parseAmount(document.getElementById("paymentAmount").value, "Payment amount");
-        const company = requireText(document.getElementById("paymentCompany").value, "Company");
-        const medium = requireText(document.getElementById("paymentMedium").value, "Payment medium");
+        const amount = parseAmount(document.getElementById("paymentAmount").value, "Recovery amount");
+        const medium = requireText(document.getElementById("paymentMedium").value, "Recovery medium");
         const date = requireText(document.getElementById("paymentDate").value, "Date");
         const note = document.getElementById("paymentNote").value.trim();
-        if (existsDuplicate(data.payments, item => item.company === company && item.amount === amount && item.date === date && item.medium === medium) && !confirm("Possible duplicate payment. Save anyway?")) return;
-        data.payments.push({ id: Date.now(), company, medium, amount, date, note });
+        if (existsDuplicate(data.payments, item => item.amount === amount && item.date === date && item.medium === medium) && !confirm("Possible duplicate recovery. Save anyway?")) return;
+        data.payments.push({ id: Date.now(), medium, amount, date, note });
         saveData();
         document.getElementById("paymentAmount").value = "";
-        document.getElementById("paymentCompany").value = "";
         document.getElementById("paymentMedium").value = "";
         document.getElementById("paymentDate").value = todayDate();
         document.getElementById("paymentNote").value = "";
@@ -1305,9 +1419,9 @@
         const item = data.sales[payload.index];
         html = `<div class="form-row"><select id="modalCompany"></select></div><div class="form-row"><input id="modalAmount" type="number" value="${item.amount}" /></div><div class="form-row"><input id="modalDate" type="date" value="${item.date}" /></div>`;
       } else if (kind === "payment") {
-        document.getElementById("editModalTitle").textContent = "Edit Payment";
+        document.getElementById("editModalTitle").textContent = "Edit Recovery";
         const item = data.payments[payload.index];
-        html = `<div class="form-row"><select id="modalCompany"></select><select id="modalMedium"></select></div><div class="form-row"><input id="modalAmount" type="number" value="${item.amount}" /><input id="modalDate" type="date" value="${item.date}" /></div><div class="form-row"><input id="modalNote" value="${item.note || ""}" placeholder="Note" /></div>`;
+        html = `<div class="form-row"><select id="modalMedium"></select></div><div class="form-row"><input id="modalAmount" type="number" value="${item.amount}" /><input id="modalDate" type="date" value="${item.date}" /></div><div class="form-row"><input id="modalNote" value="${item.note || ""}" placeholder="Note" /></div>`;
       } else if (kind === "van") {
         document.getElementById("editModalTitle").textContent = "Edit Van";
         const item = data.vans[payload.index];
@@ -1330,7 +1444,6 @@
       if (document.getElementById("modalCompany")) {
         fillCompanySelect("modalCompany");
         if (kind === "sale") document.getElementById("modalCompany").value = data.sales[payload.index].company;
-        if (kind === "payment") document.getElementById("modalCompany").value = data.payments[payload.index].company;
         if (kind === "stock") document.getElementById("modalCompany").value = data.stock[payload.index].company;
       }
       if (document.getElementById("modalMedium")) {
@@ -1373,12 +1486,11 @@
           renderSummary();
         } else if (editState.kind === "payment") {
           const index = editState.index;
-          const company = requireText(document.getElementById("modalCompany").value, "Company");
-          const medium = requireText(document.getElementById("modalMedium").value, "Payment medium");
-          const amount = parseAmount(document.getElementById("modalAmount").value, "Payment amount");
+          const medium = requireText(document.getElementById("modalMedium").value, "Recovery medium");
+          const amount = parseAmount(document.getElementById("modalAmount").value, "Recovery amount");
           const date = requireText(document.getElementById("modalDate").value, "Date");
           const note = document.getElementById("modalNote").value.trim();
-          data.payments[index] = { ...data.payments[index], company, medium, amount, date, note };
+          data.payments[index] = { ...data.payments[index], medium, amount, date, note };
           renderPayments();
           renderSummary();
         } else if (editState.kind === "van") {
@@ -1475,7 +1587,7 @@
 
     function deleteExpense(index) { deleteWithUndo({ label: "Expense", list: data.expenses, index, rerender: () => { renderExpenses(); renderSummary(); } }); }
     function deleteSale(index) { deleteWithUndo({ label: "Sale", list: data.sales, index, rerender: () => { renderSales(); renderSummary(); } }); }
-    function deletePayment(index) { deleteWithUndo({ label: "Payment", list: data.payments, index, rerender: () => { renderPayments(); renderSummary(); } }); }
+    function deletePayment(index) { deleteWithUndo({ label: "Recovery", list: data.payments, index, rerender: () => { renderPayments(); renderSummary(); } }); }
     function deleteVan(index) { deleteWithUndo({ label: "Van", list: data.vans, index, rerender: () => { renderVans(); renderSummary(); } }); }
     function deleteStock(index) { deleteWithUndo({ label: "Stock item", list: data.stock, index, rerender: () => renderStock() }); }
 
@@ -1539,8 +1651,10 @@
 
     function exportCSV() {
       downloadText(`expenses-${todayDate()}.csv`, toCSV(data.expenses, ["name", "amount", "date"]), "text/csv");
-      downloadText(`sales-${todayDate()}.csv`, toCSV(data.sales, ["company", "amount", "date"]), "text/csv");
-      downloadText(`payments-${todayDate()}.csv`, toCSV(data.payments, ["company", "medium", "amount", "date", "note"]), "text/csv");
+      downloadText(`company-sales-${todayDate()}.csv`, toCSV(data.companySales, ["company", "amount", "date"]), "text/csv");
+      downloadText(`booker-sales-${todayDate()}.csv`, toCSV(data.bookerSales, ["booker", "amount", "date"]), "text/csv");
+      downloadText(`recovery-${todayDate()}.csv`, toCSV(data.payments, ["medium", "amount", "date", "note"]), "text/csv");
+      downloadText(`outstanding-claims-${todayDate()}.csv`, toCSV(data.outstandingClaims, ["company", "amount", "date"]), "text/csv");
       downloadText(`stock-${todayDate()}.csv`, toCSV(data.stock, ["name", "company", "qty"]), "text/csv");
       markBackupDone();
     }
@@ -1597,6 +1711,193 @@
       reader.readAsText(file);
     }
 
+    let summaryFilter = {
+      startDate: todayDate(),
+      endDate: todayDate(),
+      type: 'daily'
+    };
+
+    function setSummaryRangeToday() {
+      const today = todayDate();
+      summaryFilter.startDate = today;
+      summaryFilter.endDate = today;
+      const startInput = document.getElementById("summaryStartDate");
+      const endInput = document.getElementById("summaryEndDate");
+      if (startInput) startInput.value = today;
+      if (endInput) endInput.value = today;
+      applyDateRangeFilter();
+    }
+
+    function setSummaryRangeThisMonth() {
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const formattedStart = `${startOfMonth.getFullYear()}-${String(startOfMonth.getMonth() + 1).padStart(2, "0")}-${String(startOfMonth.getDate()).padStart(2, "0")}`;
+      const today = todayDate();
+      summaryFilter.startDate = formattedStart;
+      summaryFilter.endDate = today;
+      const startInput = document.getElementById("summaryStartDate");
+      const endInput = document.getElementById("summaryEndDate");
+      if (startInput) startInput.value = formattedStart;
+      if (endInput) endInput.value = today;
+      applyDateRangeFilter();
+    }
+
+    function applyDateRangeFilter() {
+      const startInput = document.getElementById("summaryStartDate");
+      const endInput = document.getElementById("summaryEndDate");
+      if (startInput && startInput.value) summaryFilter.startDate = startInput.value;
+      if (endInput && endInput.value) summaryFilter.endDate = endInput.value;
+      renderSummary();
+    }
+
+    function showSummaryType(type) {
+      summaryFilter.type = type;
+      document.querySelectorAll("[data-summary-type]").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-summary-type") === type);
+      });
+      document.querySelectorAll(".summary-view").forEach(view => {
+        view.classList.toggle("active", view.id === (type === 'daily' ? 'dailySummaryView' : 'monthlySummaryView'));
+      });
+    }
+
+    function isDateInRange(date, startDate, endDate) {
+      return date >= startDate && date <= endDate;
+    }
+
+    function renderDailyFiltered(startDate, endDate) {
+      const expenses = data.expenses.filter(item => isDateInRange(item.date, startDate, endDate));
+      const companySales = data.companySales.filter(item => isDateInRange(item.date, startDate, endDate));
+      const bookerSales = data.bookerSales.filter(item => isDateInRange(item.date, startDate, endDate));
+      const payments = data.payments.filter(item => isDateInRange(item.date, startDate, endDate));
+
+      const totalExpenses = expenses.reduce((sum, item) => sum + item.amount, 0);
+      const totalCompanySales = companySales.reduce((sum, item) => sum + item.amount, 0);
+      const totalBookerSales = bookerSales.reduce((sum, item) => sum + item.amount, 0);
+      const totalSales = totalCompanySales + totalBookerSales;
+      const totalReceived = payments.reduce((sum, item) => sum + item.amount, 0);
+      const outstanding = totalSales - totalReceived;
+      const netProfit = totalSales - totalExpenses;
+
+      document.getElementById("dailySummaryExpenses").textContent = formatPKR(totalExpenses);
+      document.getElementById("dailySummarySales").textContent = formatPKR(totalSales);
+      document.getElementById("dailySummaryReceived").textContent = formatPKR(totalReceived);
+      document.getElementById("dailySummaryOutstanding").textContent = formatPKR(outstanding);
+      document.getElementById("dailySummaryProfit").textContent = formatPKR(netProfit);
+      document.getElementById("dailyProfitCard").className = "summary-item " + (netProfit >= 0 ? "profit" : "loss");
+
+      renderCompanyOutstandingFiltered(startDate, endDate, 'daily');
+      renderOutstandingClaimsFiltered(startDate, endDate, 'daily');
+      renderPaymentMediumTotalsFiltered(startDate, endDate, 'daily');
+      renderBookerSalesFiltered(startDate, endDate, 'daily');
+    }
+
+    function renderMonthlyFiltered(startDate, endDate) {
+      const expenses = data.expenses.filter(item => isDateInRange(item.date, startDate, endDate));
+      const companySales = data.companySales.filter(item => isDateInRange(item.date, startDate, endDate));
+      const bookerSales = data.bookerSales.filter(item => isDateInRange(item.date, startDate, endDate));
+      const payments = data.payments.filter(item => isDateInRange(item.date, startDate, endDate));
+
+      const totalExpenses = expenses.reduce((sum, item) => sum + item.amount, 0);
+      const totalCompanySales = companySales.reduce((sum, item) => sum + item.amount, 0);
+      const totalBookerSales = bookerSales.reduce((sum, item) => sum + item.amount, 0);
+      const totalSales = totalCompanySales + totalBookerSales;
+      const totalReceived = payments.reduce((sum, item) => sum + item.amount, 0);
+      const outstanding = totalSales - totalReceived;
+      const netProfit = totalSales - totalExpenses;
+
+      document.getElementById("monthlySummaryExpenses").textContent = formatPKR(totalExpenses);
+      document.getElementById("monthlySummarySales").textContent = formatPKR(totalSales);
+      document.getElementById("monthlySummaryReceived").textContent = formatPKR(totalReceived);
+      document.getElementById("monthlySummaryOutstanding").textContent = formatPKR(outstanding);
+      document.getElementById("monthlySummaryProfit").textContent = formatPKR(netProfit);
+      document.getElementById("monthlyProfitCard").className = "summary-item " + (netProfit >= 0 ? "profit" : "loss");
+
+      renderCompanyOutstandingFiltered(startDate, endDate, 'monthly');
+      renderOutstandingClaimsFiltered(startDate, endDate, 'monthly');
+      renderPaymentMediumTotalsFiltered(startDate, endDate, 'monthly');
+      renderBookerSalesFiltered(startDate, endDate, 'monthly');
+    }
+
+    function renderCompanyOutstandingFiltered(startDate, endDate, viewType) {
+      const containerId = viewType === 'daily' ? 'dailyCompanyOutstanding' : 'monthlyCompanyOutstanding';
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      
+      const saleTotals = {};
+      const paymentTotals = {};
+      COMPANY_NAMES.forEach(company => {
+        saleTotals[company] = 0;
+        paymentTotals[company] = 0;
+      });
+
+      data.companySales.forEach(sale => {
+        if (isDateInRange(sale.date, startDate, endDate)) {
+          if (saleTotals[sale.company] === undefined) saleTotals[sale.company] = 0;
+          saleTotals[sale.company] += sale.amount;
+        }
+      });
+
+      data.payments.forEach(payment => {
+        if (payment.company && isDateInRange(payment.date, startDate, endDate)) {
+          if (paymentTotals[payment.company] === undefined) paymentTotals[payment.company] = 0;
+          paymentTotals[payment.company] += payment.amount;
+        }
+      });
+
+      COMPANY_NAMES.forEach(company => {
+        const outstanding = saleTotals[company] - paymentTotals[company];
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${company}</span><strong>${formatPKR(outstanding)}</strong>`;
+        container.appendChild(row);
+      });
+    }
+
+    function renderPaymentMediumTotalsFiltered(startDate, endDate, viewType) {
+      const containerId = viewType === 'daily' ? 'dailyPaymentMediumTotals' : 'monthlyPaymentMediumTotals';
+      const box = document.getElementById(containerId);
+      box.innerHTML = "";
+      
+      const totals = { UBL: 0, HBL: 0, Konnect: 0, "Cash in hand": 0 };
+      
+      data.payments.forEach(payment => {
+        if (isDateInRange(payment.date, startDate, endDate) && totals[payment.medium] !== undefined) {
+          totals[payment.medium] += payment.amount;
+        }
+      });
+
+      Object.keys(totals).forEach(medium => {
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${medium}</span><strong>${formatPKR(totals[medium])}</strong>`;
+        box.appendChild(row);
+      });
+    }
+
+    function renderBookerSalesFiltered(startDate, endDate, viewType) {
+      const containerId = viewType === 'daily' ? 'dailyBookerSummary' : 'monthlyBookerSummary';
+      const container = document.getElementById(containerId);
+      const totals = {};
+      
+      data.bookerSales.filter(sale => isDateInRange(sale.date, startDate, endDate) && sale.booker).forEach(sale => {
+        totals[sale.booker] = (totals[sale.booker] || 0) + sale.amount;
+      });
+
+      container.innerHTML = "";
+      const entries = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+      if (!entries.length) {
+        container.innerHTML = `<div class="meta">No booker sales recorded for selected date range.</div>`;
+        return;
+      }
+      
+      entries.forEach(([booker, amount]) => {
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${booker}</span><strong>${formatPKR(amount)}</strong>`;
+        container.appendChild(row);
+      });
+    }
+
     function renderExpenses() {
       const expenseList = document.getElementById("expenseList");
       const expenseTotal = document.getElementById("expenseTotal");
@@ -1612,21 +1913,203 @@
       expenseTotal.textContent = formatPKR(total);
     }
 
-    function renderSales() {
-      const salesList = document.getElementById("salesList");
-      const salesTotal = document.getElementById("salesTotal");
-      const companyFilter = document.getElementById("companyFilter").value;
+    function renderCompanySales() {
+      const salesList = document.getElementById("companySalesList");
+      const salesTotal = document.getElementById("companySalesTotal");
+      const companyFilter = document.getElementById("companySaleFilter").value;
       salesList.innerHTML = "";
       let total = 0;
-      data.sales.forEach((sale, index) => {
-        if (companyFilter && sale.company !== companyFilter) return;
+      data.companySales
+        .map((sale, index) => ({ sale, index }))
+        .filter(({ sale }) => !companyFilter || sale.company === companyFilter)
+        .forEach(({ sale, index }) => {
+          total += sale.amount;
+          const item = document.createElement("div");
+          item.className = "item";
+          item.innerHTML = `<div class="item-left"><div class="name">${sale.company}</div><div class="meta">${formatPKR(sale.amount)} | ${sale.date}</div></div><div class="actions"><button class="delete-btn" onclick="deleteCompanySale(${index})">Delete</button></div>`;
+          salesList.appendChild(item);
+        });
+      if (!salesList.children.length) {
+        salesList.innerHTML = `<div class="meta">No company sales recorded yet.</div>`;
+      }
+      salesTotal.textContent = formatPKR(total);
+    }
+
+    function deleteCompanySale(index) {
+      if (!confirm("Delete this company sale?")) return;
+      data.companySales.splice(index, 1);
+      saveData();
+      renderCompanySales();
+      renderSummary();
+    }
+
+    function renderBookerSales() {
+      const list = document.getElementById("bookerSalesList");
+      const totalEl = document.getElementById("bookerSalesTotal");
+      list.innerHTML = "";
+      let total = 0;
+      data.bookerSales.forEach((sale, index) => {
         total += sale.amount;
         const item = document.createElement("div");
         item.className = "item";
-        item.innerHTML = `<div class="item-left"><div class="name">${sale.company}</div><div class="meta">${formatPKR(sale.amount)} | ${sale.date}</div></div><div class="actions"><button class="edit-btn" onclick="editSale(${index})">Edit</button><button class="delete-btn" onclick="deleteSale(${index})">Delete</button></div>`;
-        salesList.appendChild(item);
+        item.innerHTML = `<div class="item-left"><div class="name">${sale.booker}</div><div class="meta">${formatPKR(sale.amount)} | ${sale.date}</div></div><div class="actions"><button class="delete-btn" onclick="deleteBookerSale(${index})">Delete</button></div>`;
+        list.appendChild(item);
       });
-      salesTotal.textContent = formatPKR(total);
+      if (!list.children.length) {
+        list.innerHTML = `<div class="meta">No booker sales recorded yet.</div>`;
+      }
+      totalEl.textContent = formatPKR(total);
+    }
+
+    function addOutstandingClaim() {
+      try {
+        const company = requireText(document.getElementById("claimCompany").value, "Company");
+        const amount = parseAmount(document.getElementById("claimAmount").value, "Claim amount");
+        const date = requireText(document.getElementById("claimDate").value, "Date");
+        if (existsDuplicate(data.outstandingClaims, item => item.company === company && item.amount === amount && item.date === date) && !confirm("Possible duplicate claim. Save anyway?")) return;
+        data.outstandingClaims.push({ id: Date.now(), company, amount, date });
+        saveData();
+        document.getElementById("claimCompany").value = "";
+        document.getElementById("claimAmount").value = "";
+        document.getElementById("claimDate").value = todayDate();
+        renderOutstandingClaims();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function renderOutstandingClaims() {
+      const claimList = document.getElementById("claimList");
+      const claimTotal = document.getElementById("claimTotal");
+      claimList.innerHTML = "";
+      let total = 0;
+      data.outstandingClaims.forEach((claim, index) => {
+        total += claim.amount;
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<div class="item-left"><div class="name">${claim.company}</div><div class="meta">${formatPKR(claim.amount)} | ${claim.date}</div></div><div class="actions"><button class="delete-btn" onclick="deleteOutstandingClaim(${index})">Delete</button></div>`;
+        claimList.appendChild(item);
+      });
+      if (!claimList.children.length) {
+        claimList.innerHTML = `<div class="meta">No outstanding claims recorded yet.</div>`;
+      }
+      claimTotal.textContent = formatPKR(total);
+    }
+
+    function deleteOutstandingClaim(index) {
+      if (!confirm("Delete this outstanding claim?")) return;
+      data.outstandingClaims.splice(index, 1);
+      saveData();
+      renderOutstandingClaims();
+    }
+
+    function renderOutstandingClaimsFiltered(startDate, endDate, viewType) {
+      const containerId = viewType === 'daily' ? 'dailyOutstandingClaims' : 'monthlyOutstandingClaims';
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      const totals = {};
+      COMPANY_NAMES.forEach(company => { totals[company] = 0; });
+      data.outstandingClaims.filter(item => isDateInRange(item.date, startDate, endDate)).forEach(item => {
+        totals[item.company] = (totals[item.company] || 0) + item.amount;
+      });
+      COMPANY_NAMES.forEach(company => {
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${company}</span><strong>${formatPKR(totals[company])}</strong>`;
+        container.appendChild(row);
+      });
+    }
+
+    function renderBookerSelects() {
+      const select = document.getElementById("bookerSaleBooker");
+      if (!select) return;
+      select.innerHTML = "<option value=\"\">Select booker</option>";
+      data.bookers.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+      });
+    }
+
+    function addBooker() {
+      try {
+        const name = requireText(document.getElementById("bookerName").value, "Booker name");
+        if (existsDuplicate(data.bookers, existing => existing.toLowerCase() === name.toLowerCase())) throw new Error("Booker already exists.");
+        data.bookers.push(name);
+        saveData();
+        document.getElementById("bookerName").value = "";
+        renderBookers();
+        renderBookerSelects();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function deleteBooker(index) {
+      if (!confirm("Delete this booker?")) return;
+      data.bookers.splice(index, 1);
+      saveData();
+      renderBookers();
+      renderBookerSelects();
+    }
+
+    function renderBookers() {
+      const list = document.getElementById("bookerList");
+      list.innerHTML = "";
+      if (!data.bookers.length) {
+        list.innerHTML = `<div class="meta">No bookers saved yet.</div>`;
+        return;
+      }
+      data.bookers.forEach((name, index) => {
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `<div class="item-left"><div class="name">${name}</div></div><div class="actions"><button class="delete-btn" onclick="deleteBooker(${index})">Delete</button></div>`;
+        list.appendChild(item);
+      });
+    }
+
+    function renderDailyBookerSummary() {
+      const container = document.getElementById("dailyBookerSummary");
+      const workDate = data.meta.workDate || todayDate();
+      const totals = {};
+      data.bookerSales.filter(sale => sale.date === workDate).forEach(sale => {
+        totals[sale.booker] = (totals[sale.booker] || 0) + sale.amount;
+      });
+      container.innerHTML = "";
+      const entries = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+      if (!entries.length) {
+        container.innerHTML = `<div class="meta">No booker sales recorded for ${workDate}.</div>`;
+        return;
+      }
+      entries.forEach(([booker, amount]) => {
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${booker}</span><strong>${formatPKR(amount)}</strong>`;
+        container.appendChild(row);
+      });
+    }
+
+    function renderMonthlyBookerSummary() {
+      const container = document.getElementById("monthlyBookerSummary");
+      const workDate = data.meta.workDate || todayDate();
+      const monthKey = workDate.slice(0, 7);
+      const totals = {};
+      data.bookerSales.filter(sale => sale.date.startsWith(monthKey)).forEach(sale => {
+        totals[sale.booker] = (totals[sale.booker] || 0) + sale.amount;
+      });
+      container.innerHTML = "";
+      const entries = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+      if (!entries.length) {
+        container.innerHTML = `<div class="meta">No booker sales recorded for ${monthKey}.</div>`;
+        return;
+      }
+      entries.forEach(([booker, amount]) => {
+        const row = document.createElement("div");
+        row.className = "row-line";
+        row.innerHTML = `<span>${booker}</span><strong>${formatPKR(amount)}</strong>`;
+        container.appendChild(row);
+      });
     }
 
     function renderPayments() {
@@ -1640,7 +2123,7 @@
         if (mediumTotals[payment.medium] !== undefined) mediumTotals[payment.medium] += payment.amount;
         const item = document.createElement("div");
         item.className = "item";
-        item.innerHTML = `<div class="item-left"><div class="name">${payment.company}</div><div class="meta">${formatPKR(payment.amount)} | ${payment.medium} | ${payment.date}</div><div class="meta">${payment.note || "No note"}</div></div><div class="actions"><button class="edit-btn" onclick="editPayment(${index})">Edit</button><button class="delete-btn" onclick="deletePayment(${index})">Delete</button></div>`;
+        item.innerHTML = `<div class="item-left"><div class="name">Recovery</div><div class="meta">${formatPKR(payment.amount)} | ${payment.medium} | ${payment.date}</div><div class="meta">${payment.note || "No note"}</div></div><div class="actions"><button class="edit-btn" onclick="editPayment(${index})">Edit</button><button class="delete-btn" onclick="deletePayment(${index})">Delete</button></div>`;
         paymentList.appendChild(item);
       });
       paymentTotal.textContent = formatPKR(total);
@@ -1707,6 +2190,7 @@
         saleTotals[sale.company] += sale.amount;
       });
       data.payments.forEach(payment => {
+        if (!payment.company) return;
         if (paymentTotals[payment.company] === undefined) paymentTotals[payment.company] = 0;
         paymentTotals[payment.company] += payment.amount;
       });
@@ -1752,20 +2236,15 @@
     }
 
     function renderSummary() {
-      const totalExpenses = data.expenses.reduce((sum, item) => sum + item.amount, 0);
-      const totalSales = data.sales.reduce((sum, item) => sum + item.amount, 0);
-      const totalReceived = data.payments.reduce((sum, item) => sum + item.amount, 0);
-      const outstanding = totalSales - totalReceived;
-      const netProfit = totalSales - totalExpenses;
-      document.getElementById("summaryExpenses").textContent = formatPKR(totalExpenses);
-      document.getElementById("summarySales").textContent = formatPKR(totalSales);
-      document.getElementById("summaryReceived").textContent = formatPKR(totalReceived);
-      document.getElementById("summaryOutstanding").textContent = formatPKR(outstanding);
-      document.getElementById("summaryProfit").textContent = formatPKR(netProfit);
-      document.getElementById("summaryVans").textContent = data.vans.length;
-      document.getElementById("profitCard").className = "summary-item " + (netProfit >= 0 ? "profit" : "loss");
-      renderCompanyOutstanding();
-      renderPaymentMediumTotals();
+      const startDate = summaryFilter.startDate || todayDate();
+      const endDate = summaryFilter.endDate || todayDate();
+
+      if (summaryFilter.type === 'daily' || !summaryFilter.type) {
+        renderDailyFiltered(startDate, endDate);
+      } else if (summaryFilter.type === 'monthly') {
+        renderMonthlyFiltered(startDate, endDate);
+      }
+
       renderTodayWorkLeaderboard();
     }
 
@@ -1782,8 +2261,10 @@
 
     function renderAll() {
       renderExpenses();
-      renderSales();
+      renderCompanySales();
+      renderBookerSales();
       renderPayments();
+      renderOutstandingClaims();
       renderVans();
       renderStock();
       renderSummary();
@@ -1792,12 +2273,20 @@
     }
 
     async function init() {
-      fillCompanySelect("saleCompany");
-      fillCompanySelect("companyFilter", true);
-      fillCompanySelect("paymentCompany");
+      fillCompanySelect("companySaleCompany");
+      fillCompanySelect("companySaleFilter", true);
+      fillCompanySelect("claimCompany");
       fillCompanySelect("stockCompany");
+      renderBookerSelects();
+      renderBookers();
       document.getElementById("workDateInput").addEventListener("change", event => setWorkDate(event.target.value));
       document.getElementById("importBackupFile").addEventListener("change", importBackupFile);
+      
+      const summaryStart = document.getElementById("summaryStartDate");
+      const summaryEnd = document.getElementById("summaryEndDate");
+      if (summaryStart) summaryStart.value = summaryFilter.startDate;
+      if (summaryEnd) summaryEnd.value = summaryFilter.endDate;
+      
       registerActivityEvents();
       await migrateLegacyUsers();
       syncFormDatesFromWorkDate();
@@ -1808,5 +2297,5 @@
 
     init();
   </script>
-</body>
-</html>
+
+</body></html>
